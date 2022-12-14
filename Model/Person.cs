@@ -68,8 +68,6 @@ namespace Model
             _age = age;
             _gender = gender;
         }
-        // Отправляю изменения на GitHub...
-        // Изменения в коде
-        // Новые изменения
+
     }
 }
