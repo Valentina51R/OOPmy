@@ -46,9 +46,9 @@ namespace Model
         }
 
         /// <summary>
-        /// 
+        /// Метод для ловли ошибок.
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name"> имя.</param>
         /// <param name="surname"></param>
         /// <param name="age"></param>
         /// <exception cref="System.ArgumentException"></exception>
