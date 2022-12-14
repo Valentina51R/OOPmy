@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\C#\\OOP_LR1\\Model\\Model.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Documents\\GitHub\\OOPmy\\Model\\Model.csproj",
       "projectName": "Model",
-      "projectPath": "C:\\Users\\User\\C#\\OOP_LR1\\Model\\Model.csproj",
+      "projectPath": "C:\\Users\\User\\Documents\\GitHub\\OOPmy\\Model\\Model.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\C#\\OOP_LR1\\Model\\obj\\",
+      "outputPath": "C:\\Users\\User\\Documents\\GitHub\\OOPmy\\Model\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
