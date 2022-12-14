@@ -38,7 +38,7 @@ namespace Model
         }
 
         /// <summary>
-        /// Увеличиваем возвраст.
+        /// Увеличиваем возвраст человека.
         /// </summary>
         public void CelebrateHappyBirthday()
         {
