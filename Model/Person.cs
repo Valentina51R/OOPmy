@@ -44,6 +44,8 @@ namespace Model
         {
             _age++;
         }
+        
+        // Изменения в ветке feature
 
         /// <summary>
         /// Метод для ловли ошибок.
