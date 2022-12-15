@@ -8,5 +8,6 @@ namespace Model
 {
     internal class PersonList
     {
+        // изменения в ветке feature
     }
 }
