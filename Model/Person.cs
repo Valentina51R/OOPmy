@@ -11,21 +11,54 @@ namespace Model
         {
             return _name;
         }
-        public string Name { get;}
 
         private string _name;
-
         private string _surname;
-
         private int _age;
-
         private Gender _gender;
 
+        public string Name 
+        { 
+            get 
+            {
+                return _name;
+            }
+            set
+            {
+                 _name = CheckString(value, nameof(Name));
+            }
+        }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public Person Parter;
+
+        public string Surname
+        { 
+            get 
+            { 
+                return _surname;
+            }
+            set
+            { 
+                _surname = CheckString(value, nameof(Surname));
+            }
+        }
+
+        public int Age { get; set; }
+
+        public Gender Gender { get; set; }
+
+        private string CheckString(string value, string propertiname)
+        {
+            if (value == null)
+            {
+                throw new System.ArgumentNullException($"{propertiname} is not be null!");
+            }
+            if (value == string.Empty)
+            {
+                throw new System.ArgumentException($"{propertiname} is not be emptu!");
+            }
+            return value;
+        }
+
 
         /// <summary>
         /// Метод возвращает информацию о человеке в воиде строки.
@@ -33,8 +66,8 @@ namespace Model
         /// <returns>Информацию о человеке в воиде строки.</returns>
         public string GetInfo()
         {
-            return $"\nPerconname: {_name}, Sername: {_surname}, Age: {_age}.\n"
-                + $"Percon parter {Parter?.GetInfo()}";
+            return $"Perconname: {_name}, Sername: {_surname}," +
+                $" Age: {_age}, Gender: {_gender}";
         }
 
         /// <summary>
@@ -45,8 +78,6 @@ namespace Model
             _age++;
         }
         
-        // Изменения в ветке feature
-
         /// <summary>
         /// Метод для ловли ошибок.
         /// </summary>
@@ -60,7 +91,8 @@ namespace Model
             {
                 throw new System.ArgumentNullException("Name is not be null!");
             }
-            if (name == string.Empty)
+
+            if (string.IsNullOrEmpty(name))
             {
                 throw new System.ArgumentException("Name is not be emptu!");
             }
@@ -70,6 +102,5 @@ namespace Model
             _age = age;
             _gender = gender;
         }
-
     }
 }
