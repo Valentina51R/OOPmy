@@ -36,6 +36,7 @@ namespace ConsoleApp
             people2.Add(new Person("Анна", "Ананасова", 29, Gender.Female));
             people2.Add(new Person("Ольга", "Овечкина", 89, Gender.Female));
 
+
             // b. Вывод содержимое каждого списка на экран
             Console.WriteLine("\n\t\tВывод списков на экран.");
             Console.ReadKey();
@@ -52,7 +53,10 @@ namespace ConsoleApp
             Console.WriteLine("\n\t\tДобавление человека в список №1.");
             Console.ReadKey();
             prlist.AddPerson(people1);
-
+            /*
+            Person person = new Person("Ivanov", "Ivanov", 20, Gender.Male);
+            people1.Add(person.GetRandomPerson());
+            */
             // Печать списка 1
             Console.WriteLine("\nСписок №1 с добавлением:");
             prlist.Print(people1);

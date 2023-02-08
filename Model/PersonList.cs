@@ -53,7 +53,8 @@ namespace Model
             // Равносильно "пока не true"
             while (!ushort.TryParse(Console.ReadLine(), out age))
             {
-                Console.WriteLine("Введён некорректный возвраст, введите число!");
+                Console.WriteLine("Введён некорректный возвраст," +
+                    " введите число!");
             }
 
             Console.Write("Введите пол человека: ");
@@ -74,7 +75,8 @@ namespace Model
                 }
                 else
                 {
-                    Console.WriteLine("Введён некорректный пол, введите м или ж!");
+                    Console.WriteLine("Введён некорректный пол," +
+                        " введите м или ж!");
                 }
             }
 
@@ -113,6 +115,7 @@ namespace Model
             people.RemoveAt(index);
         }
 
+        // TODO: этот метод не используется в программе
         /// <summary>
         /// Удалить выбранный элемент списка.
         /// По фамилии.
@@ -154,6 +157,7 @@ namespace Model
             }
         }
 
+        // TODO: этот метод не используется в программе
         /// <summary>
         /// Вернуть индекс элемента при
         /// наличии его в списке.
@@ -170,8 +174,9 @@ namespace Model
             return index;
         }
 
+        // TODO: этот метод не используется в программе
         /// <summary>
-        /// Колличество элементов всписке.
+        /// Колличество элементов в списке.
         /// </summary>
         /// <param name="people"></param>
         /// <returns></returns>
@@ -181,6 +186,10 @@ namespace Model
             return count;
         }
 
+        /// <summary>
+        /// Печать списка.
+        /// </summary>
+        /// <param name="people"> Список.</param>
         public void Print(List<Person> people)
         {
             foreach (Person p in people)
