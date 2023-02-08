@@ -136,7 +136,7 @@ namespace Model
         /// </summary>
         /// <param name="people"></param>
         /// <param name="index"></param>
-        public void FindByIndex(List<Person> people, int index)
+        public Person FindByIndex(List<Person> people, int index)
         {
             int countIndex = people.Count - 1;
 
@@ -144,11 +144,13 @@ namespace Model
             {
                 Console.WriteLine("Элемента с таким индексам нет в списке." +
                     $"Введите индекс от 0 до {countIndex}.");
+                return people[countIndex];
             }
             else
             {
-                Console.WriteLine($"Элемент с индексом {index}: ");
-                Console.WriteLine(people[index].GetInfo());
+                //Console.WriteLine($"Элемент с индексом {index}: ");
+                //Console.WriteLine(people[index].GetInfo());
+                return people[index];
             }
         }
 
