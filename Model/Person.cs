@@ -44,7 +44,22 @@ namespace Model
             }
         }
 
-        public int Age { get; set; }
+        public int Age 
+        { 
+            get
+            {
+                return _age;
+
+            }
+            set
+            {
+                if (value < 0 )
+                {
+                    Console.WriteLine("Введён некорректный возвраст," +
+                                       " введите положительное число!");
+                }
+            }
+        }
 
         public Gender Gender { get; set; }
 
@@ -70,14 +85,6 @@ namespace Model
         {
             return $"Perconname: {_name}, Sername: {_surname}," +
                 $" Age: {_age}, Gender: {_gender}";
-        }
-
-        /// <summary>
-        /// Увеличиваем возвраст человека.
-        /// </summary>
-        public void CelebrateHappyBirthday()
-        {
-            _age++;
         }
         
         /// <summary>
@@ -151,5 +158,69 @@ namespace Model
             Person p = new Person(name, surname, age, gender);
             return p;
         }
+
+        /// <summary>
+        /// Чтение персоны с клавиатуры.
+        /// </summary>
+        /// <returns></returns>
+        public Person AddPersonInPerson()
+        {
+            PersonList prlist = new PersonList();
+
+            Console.Write("Введите имя человека: ");
+            string name = prlist.NameSurname();
+
+            Console.Write("Введите фамилию человека: ");
+            string surname = prlist.NameSurname();
+
+            Console.Write("Введите возраст человека: ");
+            ushort age;
+
+            // Равносильно "пока не true"
+            // Проверка на ввод числа.
+            while (!ushort.TryParse(Console.ReadLine(), out age))
+            {
+                Console.WriteLine("Введён некорректный возвраст," +
+                                      " введите положительное число!");
+            }
+
+            Console.Write("Введите пол человека: ");
+            Gender gender;
+
+            while (true)
+            {
+                string gender1 = Console.ReadLine();
+                if (gender1 == "ж" || gender1 == "w")
+                {
+                    gender = Gender.Female;
+                    break;
+                }
+                else if (gender1 == "м" || gender1 == "m")
+                {
+                    gender = Gender.Male;
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Введён некорректный пол," +
+                        " введите м или ж!");
+                }
+            }
+
+            while (true)
+            {
+                try
+                {
+                    Person p = new Person(name, surname, age, gender);
+                    return p;
+                }
+
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine("Ошибка! " + ex.Message);
+                }
+            }
+        }
+
     }
 }

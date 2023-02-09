@@ -53,10 +53,15 @@ namespace ConsoleApp
             Console.WriteLine("\n\t\tДобавление человека в список №1.");
             Console.ReadKey();
             prlist.AddPerson(people1);
+
+            // Использование функции рандомного человека.
             /*
-            Person person = new Person("Ivanov", "Ivanov", 20, Gender.Male);
-            people1.Add(person.GetRandomPerson());
+            Console.WriteLine("\n\t\tДобавление рандомного человека" +
+                " в список №1.");
+            Person personRand = Person.GetRandomPerson();
+            people1.Add(personRand);
             */
+
             // Печать списка 1
             Console.WriteLine("\nСписок №1 с добавлением:");
             prlist.Print(people1);

@@ -4,57 +4,76 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Model
 {
     public class PersonList
     {
         /// <summary>
+        /// Проверка ввода имени и фамилии.
+        /// Замена регистра первой буквы.
+        /// </summary>
+        /// <returns></returns>
+        public string NameSurname()
+        {
+            // Только буквы
+            Regex regex = new Regex(@"[а-я,А-Я,A-z,a-z]+[-][а-я,А-Я,A-z,a-z]+\b|[а-я,А-Я,A-z,a-z]+\b");
+
+            // TODO: исключить поторение кода.
+            while (true)
+            {
+                string surnameOrName = Console.ReadLine();
+
+                while (!regex.IsMatch(surnameOrName))
+                {
+                    Console.WriteLine("Не удалось распознать имя/фамилию" +
+                                       ", введите снова!");
+                }
+
+                //TODO: заглавные буквы и во второй части двйной фамилии
+                surnameOrName = surnameOrName[0].ToString().ToUpper() + surnameOrName.Substring(1);
+
+                Regex regex1 = new Regex(@"[-]");
+                if (regex1.IsMatch(surnameOrName))
+                {
+                    string[] words = surnameOrName.Split(new char[] { '-' });
+                    string word1 = words[0];
+                    string word2 = words[1];
+                    word1 = word1[0].ToString().ToUpper() + word1.Substring(1);
+                    word2 = word2[0].ToString().ToUpper() + word2.Substring(1);
+                    surnameOrName = word1 + "-" + word2;
+                }
+
+                return surnameOrName;
+                break;
+            }
+
+        }
+
+        /// <summary>
         /// Добавление элемента.
         /// </summary>
         /// <param name="people"></param>
         public void AddPerson(List<Person> people)
         {
+            
             Console.Write("Введите имя человека: ");
-            string name;
-            // Только буквы
-            Regex regex = new Regex(@"[а-я,А-Я,A-z,a-z]+\b");
-
-            while (true)
-            {
-                name = Console.ReadLine();
-                while (!regex.IsMatch(name))
-                {
-                    Console.WriteLine("Не удалось распознать имя" +
-                                       ", введите снова!");
-                }
-
-                break;
-            }
-
-
+            string name = NameSurname();
+            
             Console.Write("Введите фамилию человека: ");
-            string surname;
-            while (true)
-            {
-                surname = Console.ReadLine();
-                while (!regex.IsMatch(surname))
-                {
-                    Console.WriteLine("Не удалось распознать фамилию" +
-                                       ", введите снова!");
-                }
-
-                break;
-            }
-
+            string surname = NameSurname();
+            
             Console.Write("Введите возраст человека: ");
             ushort age;
 
             // Равносильно "пока не true"
+            // Проверка на ввод числа.
             while (!ushort.TryParse(Console.ReadLine(), out age))
             {
-                Console.WriteLine("Введён некорректный возвраст," +
-                    " введите число!");
+                 Console.WriteLine("Введён некорректный возвраст," +
+                                       " введите положительное число!");   
             }
 
             Console.Write("Введите пол человека: ");
@@ -63,12 +82,12 @@ namespace Model
             while (true)
             {
                 string gender1 = Console.ReadLine();
-                if (gender1 == "ж")
+                if (gender1 == "ж" || gender1 == "w")
                 {
                     gender = Gender.Female;
                     break;
                 }
-                else if (gender1 == "м")
+                else if (gender1 == "м" || gender1 == "m")
                 {
                     gender = Gender.Male;
                     break;
@@ -94,6 +113,13 @@ namespace Model
                     Console.WriteLine("Ошибка! " + ex.Message);
                 }
             }
+
+            // Чтобы не повторялосась одна и та же функция в Person и PersonList
+            /*
+            Person personNew = Person.GetRandomPerson();
+            people.Add(personNew.AddPersonInPerson());
+            return;
+            */
         }
 
         /// <summary>
@@ -112,6 +138,7 @@ namespace Model
         /// <param name="index"></param>
         public void DeleteByIndex(List<Person> people, int index)
         {
+            // Проверка индекса
             people.RemoveAt(index);
         }
 
@@ -122,9 +149,9 @@ namespace Model
         /// </summary>
         /// <param name="people"></param>
         /// <returns></returns>
-        public int DeleteOnes(List<Person> people)
+        public int DeleteBySurname(List<Person> people)
         {
-            Console.Write("Удаление человека из списка: ");
+            Console.Write("Удаление человека из списка.");
             Console.Write("Введите фамилию человека: ");
             string surname = Console.ReadLine();
 
