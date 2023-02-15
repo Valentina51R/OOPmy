@@ -8,12 +8,29 @@ namespace Model
     /// </summary>
     public class Person
     {
-
+        /// <summary>
+        /// Имя.
+        /// </summary>
         private string _name;
+
+        /// <summary>
+        /// Фамилия.
+        /// </summary>
         private string _surname;
+
+        /// <summary>
+        /// Возраст.
+        /// </summary>
         private int _age;
+
+        /// <summary>
+        /// Пол.
+        /// </summary>
         private Gender _gender;
 
+        /// <summary>
+        /// Задание имени.
+        /// </summary>
         public string Name
         {
             get
@@ -26,7 +43,9 @@ namespace Model
             }
         }
 
-
+        /// <summary>
+        /// Задание фамилии.
+        /// </summary>
         public string Surname
         {
             get
@@ -39,6 +58,9 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// Задание возраста.
+        /// </summary>
         public int Age
         {
             get
@@ -57,6 +79,9 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// Задание гендера.
+        /// </summary>
         public Gender Gender { get; set; }
 
         private string CheckString(string value, string propertiname)
@@ -75,7 +100,7 @@ namespace Model
 
 
         /// <summary>
-        /// Метод возвращает информацию о человеке в воиде строки.
+        /// Метод возвращает информацию о человеке в виде строки.
         /// </summary>
         /// <returns>Информацию о человеке в воиде строки.</returns>
         public string GetInfo()
