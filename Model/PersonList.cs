@@ -24,7 +24,8 @@ namespace Model
         /// <param name="people"></param>
         public void AddPerson(string name, string surname, ushort age, Gender gender)
         {
-
+            _people.Add(new Person(name, surname, age, gender));
+            /*
             while (true)
             {
                 try
@@ -39,7 +40,7 @@ namespace Model
                     Console.WriteLine("Ошибка! " + ex.Message);
                 }
             }
-
+            */
         }
 
         /// <summary>
@@ -89,10 +90,7 @@ namespace Model
 
             if (countIndex < index)
             {
-                // TODO: Вынести в консоль
                 throw new Exception("Элемента с таким индексам нет в списке");
-                //Console.WriteLine("Элемента с таким индексам нет в списке." +
-                //    $"Введите индекс от 0 до {countIndex}.");
                 return _people[countIndex];
             }
             else

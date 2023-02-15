@@ -156,25 +156,25 @@ namespace Model
                     // Console.WriteLine("Не удалось распознать имя/фамилию" +
                     //                    ", введите снова!");
                 }
-
-                //TODO: заглавные буквы и во второй части двйной фамилии
-                surnameOrName = surnameOrName[0].ToString().ToUpper()
-                    + surnameOrName.Substring(1);
-
-                Regex regex1 = new Regex(@"[-]");
-                if (regex1.IsMatch(surnameOrName))
-                {
-                    string[] words = surnameOrName.Split(new char[] { '-' });
-                    string word1 = words[0];
-                    string word2 = words[1];
-                    word1 = word1[0].ToString().ToUpper() + word1.Substring(1);
-                    word2 = word2[0].ToString().ToUpper() + word2.Substring(1);
-                    surnameOrName = word1 + "-" + word2;
-                }
-
-                return surnameOrName;
                 break;
             }
+
+            //TODO: заглавные буквы и во второй части двйной фамилии
+            surnameOrName = surnameOrName[0].ToString().ToUpper()
+                    + surnameOrName.Substring(1);
+
+            Regex regex1 = new Regex(@"[-]");
+            if (regex1.IsMatch(surnameOrName))
+            {
+                string[] words = surnameOrName.Split(new char[] { '-' });
+                string word1 = words[0];
+                string word2 = words[1];
+                word1 = word1[0].ToString().ToUpper() + word1.Substring(1);
+                word2 = word2[0].ToString().ToUpper() + word2.Substring(1);
+                surnameOrName = word1 + "-" + word2;
+            }
+
+            return surnameOrName;
         }
     }
 }

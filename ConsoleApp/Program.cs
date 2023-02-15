@@ -107,8 +107,19 @@ namespace ConsoleApp
                 }
             }
 
-            personlist1.AddPerson(name, surname, age, gender);
+            while (true)
+            {
+                try
+                {
+                    personlist1.AddPerson(name, surname, age, gender);
+                }
 
+                catch (ArgumentException ex)
+                {
+                    // TODO: Вынести в консоль
+                    Console.WriteLine("Ошибка! " + ex.Message);
+                }
+            }
 
             // Печать списка 1
             Console.WriteLine("\nСписок №1 с добавлением:");
