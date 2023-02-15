@@ -1,6 +1,5 @@
-﻿using System.Reflection;
+
 using System.Text.RegularExpressions;
-using System.Xml.Linq;
 
 namespace Model
 {
@@ -9,43 +8,39 @@ namespace Model
     /// </summary>
     public class Person
     {
-        public string GetName()
-        {
-            return _name;
-        }
 
         private string _name;
         private string _surname;
         private int _age;
         private Gender _gender;
 
-        public string Name 
-        { 
-            get 
+        public string Name
+        {
+            get
             {
                 return _name;
             }
             set
             {
-                 _name = CheckString(value, nameof(Name));
+                _name = CheckString(value, nameof(Name));
             }
         }
 
 
         public string Surname
-        { 
-            get 
-            { 
+        {
+            get
+            {
                 return _surname;
             }
             set
-            { 
+            {
                 _surname = CheckString(value, nameof(Surname));
             }
         }
 
-        public int Age 
-        { 
+        public int Age
+        {
             get
             {
                 return _age;
@@ -53,10 +48,11 @@ namespace Model
             }
             set
             {
-                if (value < 0 )
+                if (value < 0)
                 {
-                    Console.WriteLine("Введён некорректный возвраст," +
-                                       " введите положительное число!");
+                    // TODO: вынести в консоль
+                    throw new Exception($"Введён некорректный возвраст, " +
+                        $"введите положительное число!");
                 }
             }
         }
@@ -69,7 +65,8 @@ namespace Model
             {
                 throw new System.ArgumentNullException($"{propertiname} is not be null!");
             }
-            if (value == string.Empty)
+
+            if (string.IsNullOrEmpty(value))
             {
                 throw new System.ArgumentException($"{propertiname} is not be emptu!");
             }
@@ -86,7 +83,7 @@ namespace Model
             return $"Perconname: {_name}, Sername: {_surname}," +
                 $" Age: {_age}, Gender: {_gender}";
         }
-        
+
         /// <summary>
         /// Метод для ловли ошибок.
         /// </summary>
@@ -112,115 +109,47 @@ namespace Model
             _gender = gender;
         }
 
-        /// <summary>
-        /// Вывод персоны на экран.
-        /// </summary>
-        /// <param name="people"> Список.</param>
-        public void PrintPerson()
-        {
-            Console.WriteLine(GetInfo());
-        }
 
         /// <summary>
-        /// Создание рандомного человека
+        /// Проверка ввода имени и фамилии.
+        /// Замена регистра первой буквы.
         /// </summary>
         /// <returns></returns>
-        public static Person GetRandomPerson()
+        public static string CheckNameSurname(string surnameOrName)
         {
-            string[] menName = { "Иван", "Пётр", "Игорь", "Михаил",
-                "Александр", "Вячеслав", "Анатолий", "Дмитрий" };
-            string[] wemenName = { "Инна", "Полина", "Мария", "Алиса",
-                "Томара", "Екатерина", "Анна", "Римма" };
-
-            string[] menSurname = { "Иванов", "Пётров", "Пупкин", "Мишуткин",
-                "Абрикосов", "Веников", "Сомин", "Котов" };
-            string[] wemenSurname = { "Романова", "Поликарпова", "Маринина",
-                "Алъенок", "Тришина", "Норкина", "Васильева", "Приходько" };
-
-            Random rnd = new Random();
-
-            Gender gender = (Gender)rnd.Next(2);
-            int age = rnd.Next(1, 100);
-            string name;
-            string surname;
-
-            if (gender == Gender.Male)
-            {
-                name = menName[new Random().Next(1, menName.Length)];
-                surname = menSurname[new Random().Next(1, menSurname.Length)];
-            }
-            else
-            {
-                name = wemenName[new Random().Next(1, wemenName.Length)];
-                surname = wemenSurname[new Random().Next(1, wemenSurname.Length)];
-            }
-
-            Person p = new Person(name, surname, age, gender);
-            return p;
-        }
-
-        /// <summary>
-        /// Чтение персоны с клавиатуры.
-        /// </summary>
-        /// <returns></returns>
-        public Person AddPersonInPerson()
-        {
-            PersonList prlist = new PersonList();
-
-            Console.Write("Введите имя человека: ");
-            string name = prlist.NameSurname();
-
-            Console.Write("Введите фамилию человека: ");
-            string surname = prlist.NameSurname();
-
-            Console.Write("Введите возраст человека: ");
-            ushort age;
-
-            // Равносильно "пока не true"
-            // Проверка на ввод числа.
-            while (!ushort.TryParse(Console.ReadLine(), out age))
-            {
-                Console.WriteLine("Введён некорректный возвраст," +
-                                      " введите положительное число!");
-            }
-
-            Console.Write("Введите пол человека: ");
-            Gender gender;
+            // Только буквы
+            Regex regex = new Regex(@"[а-я,А-Я,A-z,a-z]+[-]
+                   [а-я,А-Я,A-z,a-z]+\b|[а-я,А-Я,A-z,a-z]+\b");
 
             while (true)
             {
-                string gender1 = Console.ReadLine();
-                if (gender1 == "ж" || gender1 == "w")
-                {
-                    gender = Gender.Female;
-                    break;
-                }
-                else if (gender1 == "м" || gender1 == "m")
-                {
-                    gender = Gender.Male;
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Введён некорректный пол," +
-                        " введите м или ж!");
-                }
-            }
 
-            while (true)
-            {
-                try
+                while (!regex.IsMatch(surnameOrName))
                 {
-                    Person p = new Person(name, surname, age, gender);
-                    return p;
+                    // TODO: вынести в консоль
+                    throw new Exception("Не удалось распознать имя/фамилию");
+                    // Console.WriteLine("Не удалось распознать имя/фамилию" +
+                    //                    ", введите снова!");
                 }
 
-                catch (ArgumentException ex)
+                //TODO: заглавные буквы и во второй части двйной фамилии
+                surnameOrName = surnameOrName[0].ToString().ToUpper()
+                    + surnameOrName.Substring(1);
+
+                Regex regex1 = new Regex(@"[-]");
+                if (regex1.IsMatch(surnameOrName))
                 {
-                    Console.WriteLine("Ошибка! " + ex.Message);
+                    string[] words = surnameOrName.Split(new char[] { '-' });
+                    string word1 = words[0];
+                    string word2 = words[1];
+                    word1 = word1[0].ToString().ToUpper() + word1.Substring(1);
+                    word2 = word2[0].ToString().ToUpper() + word2.Substring(1);
+                    surnameOrName = word1 + "-" + word2;
                 }
+
+                return surnameOrName;
+                break;
             }
         }
-
     }
 }

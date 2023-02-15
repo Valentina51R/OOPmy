@@ -1,70 +1,118 @@
-﻿using Model;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
+using Model;
 
 namespace ConsoleApp
 {
     /// <summary>
     /// 
     /// </summary>
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        /// <summary>
+        /// Печать списка.
+        /// </summary>
+        /// <param name="people"> Список.</param>
+        public static void Print(PersonList people)
+        {
+            int count = people.CountList();
+
+            for (int i = 0; i < count; i++)
+            {
+                Person pers = people.FindByIndex(i);
+                Console.WriteLine(pers.GetInfo());
+            }
+        }
+
+        /// <summary>
+        /// Основная программа.
+        /// </summary>
+        private static void Main()
         {
             Console.WriteLine("Каждый новый шаг выполняется по нажатию" +
                 " любой клавиши клавиатуры.\nНажмите любую клавишу.");
-            Console.ReadKey();
+            _ = Console.ReadKey();
             // а.Создание программно двух списков персон,
             // в каждом из которых будет по три человека.
             Console.WriteLine("\n\t\tСоздание программно двух списков" +
                 " персон, в каждом из которых будет по три человека.");
-            Console.ReadKey();
+            _ = Console.ReadKey();
 
-            List<Person> people1 = new List<Person>();
-            List<Person> people2 = new List<Person>();
 
-            PersonList prlist = new PersonList();
+            PersonList personlist1 = new PersonList();
+            PersonList personlist2 = new PersonList();
+
 
             // Создание исходного списка 1
-            people1.Add(new Person("Иван", "Иванов", 28, Gender.Male));
-            people1.Add(new Person("Пётр", "Петров", 35, Gender.Male));
-            people1.Add(new Person("Василий", "Вавильев", 15, Gender.Male));
+            personlist1.Add(RandomPerson.GetRandomPerson());
+            personlist1.Add(RandomPerson.GetRandomPerson());
+            personlist1.Add(RandomPerson.GetRandomPerson());
 
             // Создание исходного списка 2
-            people2.Add(new Person("Ирина", "Ирисова", 28, Gender.Female));
-            people2.Add(new Person("Анна", "Ананасова", 29, Gender.Female));
-            people2.Add(new Person("Ольга", "Овечкина", 89, Gender.Female));
-
+            personlist2.Add(RandomPerson.GetRandomPerson());
+            personlist2.Add(RandomPerson.GetRandomPerson());
+            personlist2.Add(RandomPerson.GetRandomPerson());
 
             // b. Вывод содержимое каждого списка на экран
             Console.WriteLine("\n\t\tВывод списков на экран.");
-            Console.ReadKey();
+            _ = Console.ReadKey();
 
             // Печать исходного списка 1
             Console.WriteLine("Список №1:");
-            prlist.Print(people1);
+            Print(personlist1);
 
             // Печать исходного списка 2
             Console.WriteLine("\nСписок №2:");
-            prlist.Print(people2);
+            Print(personlist2);
 
             // c. Добавление нового человека в список 1
             Console.WriteLine("\n\t\tДобавление человека в список №1.");
-            Console.ReadKey();
-            prlist.AddPerson(people1);
+            _ = Console.ReadKey();
 
-            // Использование функции рандомного человека.
-            /*
-            Console.WriteLine("\n\t\tДобавление рандомного человека" +
-                " в список №1.");
-            Person personRand = Person.GetRandomPerson();
-            people1.Add(personRand);
-            */
+            Console.Write("Введите имя человека: ");
+            string name = Person.CheckNameSurname(Console.ReadLine());
+
+            Console.Write("Введите фамилию человека: ");
+            string surname = Person.CheckNameSurname(Console.ReadLine());
+
+            Console.Write("Введите возраст человека: ");
+            ushort age;
+
+            // Проверка на ввод числа.
+            while (!ushort.TryParse(Console.ReadLine(), out age))
+            {
+                Console.WriteLine("Введён некорректный возвраст," +
+                                      " введите положительное число!");
+            }
+
+            Console.Write("Введите пол человека: ");
+            Console.Write("Введите пол человека: ");
+            Gender gender;
+
+            while (true)
+            {
+                string gender1 = Console.ReadLine();
+                if (gender1 == "ж" || gender1 == "w")
+                {
+                    gender = Gender.Female;
+                    break;
+                }
+                else if (gender1 == "м" || gender1 == "m")
+                {
+                    gender = Gender.Male;
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Введён некорректный пол," +
+                        " введите м или ж!");
+                }
+            }
+
+            personlist1.AddPerson(name, surname, age, gender);
+
 
             // Печать списка 1
             Console.WriteLine("\nСписок №1 с добавлением:");
-            prlist.Print(people1);
+            Print(personlist1);
 
             // d.Скопируйте второго человека из первого списка
             // в конец второго списка.
@@ -73,41 +121,41 @@ namespace ConsoleApp
             Console.WriteLine();
             Console.WriteLine("\n\t\tКопирование 2-ого человека из первого" +
                 " списка в конец второго списка.");
-            Console.ReadKey();
-            people2.Add(prlist.FindByIndex(people1, 1));
+            _ = Console.ReadKey();
+            personlist2.Add(personlist1.FindByIndex(1));
 
             Console.WriteLine("\nСписок №1:");
-            prlist.Print(people1);
+            Print(personlist1);
 
             Console.WriteLine("\nСписок №2:");
-            prlist.Print(people2);
+            Print(personlist2);
 
             // e.Удалите второго человека из первого списка. Покажите, что
             // удаление человека из первого списка не привело к уничтожению
             // этого же человека во втором списке.
             Console.WriteLine("\n\t\tУдаление второго человека" +
                 " из первого списка.");
-            Console.ReadKey();
-            prlist.DeleteByIndex(people1, 1);
+            _ = Console.ReadKey();
+            personlist1.DeleteByIndex(1);
 
             Console.WriteLine("\nСписок №1:");
-            prlist.Print(people1);
+            Print(personlist1);
 
             Console.WriteLine("\nСписок №2:");
-            prlist.Print(people2);
+            Print(personlist2);
 
             // f.Очистите второй список.
             Console.WriteLine("\n\t\tОчищение второго списка.");
-            Console.ReadKey();
-            prlist.DeleteAll(people2);
+            _ = Console.ReadKey();
+            personlist2.DeleteAll();
 
             Console.WriteLine("\nСписок №1:");
-            prlist.Print(people1);
+            Print(personlist1);
 
             Console.WriteLine("\nСписок №2:");
-            prlist.Print(people2);
+            Print(personlist2);
 
-            Console.ReadKey();
+            _ = Console.ReadKey();
         }
     }
 }
