@@ -3,25 +3,10 @@ using Model;
 namespace ConsoleApp
 {
     /// <summary>
-    /// 
+    /// Основная программа.
     /// </summary>
     internal class Program
     {
-        /// <summary>
-        /// Печать списка.
-        /// </summary>
-        /// <param name="people"> Список.</param>
-        public static void Print(PersonList people)
-        {
-            int count = people.CountList();
-
-            for (int i = 0; i < count; i++)
-            {
-                Person pers = people.FindByIndex(i);
-                Console.WriteLine(pers.GetInfo());
-            }
-        }
-
         /// <summary>
         /// Основная программа.
         /// </summary>
@@ -30,6 +15,7 @@ namespace ConsoleApp
             Console.WriteLine("Каждый новый шаг выполняется по нажатию" +
                 " любой клавиши клавиатуры.\nНажмите любую клавишу.");
             _ = Console.ReadKey();
+
             // а.Создание программно двух списков персон,
             // в каждом из которых будет по три человека.
             Console.WriteLine("\n\t\tСоздание программно двух списков" +
@@ -57,73 +43,20 @@ namespace ConsoleApp
 
             // Печать исходного списка 1
             Console.WriteLine("Список №1:");
-            Print(personlist1);
+            ConsolePerson.Print(personlist1);
 
             // Печать исходного списка 2
             Console.WriteLine("\nСписок №2:");
-            Print(personlist2);
+            ConsolePerson.Print(personlist2);
 
             // c. Добавление нового человека в список 1
             Console.WriteLine("\n\t\tДобавление человека в список №1.");
             _ = Console.ReadKey();
-
-            Console.Write("Введите имя человека: ");
-            string name = Person.CheckNameSurname(Console.ReadLine());
-
-            Console.Write("Введите фамилию человека: ");
-            string surname = Person.CheckNameSurname(Console.ReadLine());
-
-            Console.Write("Введите возраст человека: ");
-            ushort age;
-
-            // Проверка на ввод числа.
-            while (!ushort.TryParse(Console.ReadLine(), out age))
-            {
-                Console.WriteLine("Введён некорректный возвраст," +
-                                      " введите положительное число!");
-            }
-
-            Console.Write("Введите пол человека: ");
-            Console.Write("Введите пол человека: ");
-            Gender gender;
-
-            while (true)
-            {
-                string gender1 = Console.ReadLine();
-                if (gender1 == "ж" || gender1 == "w")
-                {
-                    gender = Gender.Female;
-                    break;
-                }
-                else if (gender1 == "м" || gender1 == "m")
-                {
-                    gender = Gender.Male;
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Введён некорректный пол," +
-                        " введите м или ж!");
-                }
-            }
-
-            while (true)
-            {
-                try
-                {
-                    personlist1.AddPerson(name, surname, age, gender);
-                }
-
-                catch (ArgumentException ex)
-                {
-                    // TODO: Вынести в консоль
-                    Console.WriteLine("Ошибка! " + ex.Message);
-                }
-            }
+            personlist1.Add(ConsolePerson.InputPersonByConsole());
 
             // Печать списка 1
             Console.WriteLine("\nСписок №1 с добавлением:");
-            Print(personlist1);
+            ConsolePerson.Print(personlist1);
 
             // d.Скопируйте второго человека из первого списка
             // в конец второго списка.
@@ -133,13 +66,20 @@ namespace ConsoleApp
             Console.WriteLine("\n\t\tКопирование 2-ого человека из первого" +
                 " списка в конец второго списка.");
             _ = Console.ReadKey();
-            personlist2.Add(personlist1.FindByIndex(1));
+            try
+            {
+                personlist2.Add(personlist1.FindByIndex(1));
+            }
+            catch (IndexOutOfRangeException exception)
+            {
+                Console.WriteLine($"Error: {exception.Message}");
+            }
 
             Console.WriteLine("\nСписок №1:");
-            Print(personlist1);
+            ConsolePerson.Print(personlist1);
 
             Console.WriteLine("\nСписок №2:");
-            Print(personlist2);
+            ConsolePerson.Print(personlist2);
 
             // e.Удалите второго человека из первого списка. Покажите, что
             // удаление человека из первого списка не привело к уничтожению
@@ -147,13 +87,20 @@ namespace ConsoleApp
             Console.WriteLine("\n\t\tУдаление второго человека" +
                 " из первого списка.");
             _ = Console.ReadKey();
-            personlist1.DeleteByIndex(1);
+            try
+            {
+                personlist1.DeleteByIndex(1);
+            }
+            catch (IndexOutOfRangeException exception)
+            {
+                Console.WriteLine($"Error: {exception.Message}");
+            }
 
             Console.WriteLine("\nСписок №1:");
-            Print(personlist1);
+            ConsolePerson.Print(personlist1);
 
             Console.WriteLine("\nСписок №2:");
-            Print(personlist2);
+            ConsolePerson.Print(personlist2);
 
             // f.Очистите второй список.
             Console.WriteLine("\n\t\tОчищение второго списка.");
@@ -161,10 +108,10 @@ namespace ConsoleApp
             personlist2.DeleteAll();
 
             Console.WriteLine("\nСписок №1:");
-            Print(personlist1);
+            ConsolePerson.Print(personlist1);
 
             Console.WriteLine("\nСписок №2:");
-            Print(personlist2);
+            ConsolePerson.Print(personlist2);
 
             _ = Console.ReadKey();
         }

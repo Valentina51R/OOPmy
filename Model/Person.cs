@@ -1,4 +1,3 @@
-
 using System.Text.RegularExpressions;
 
 namespace Model
@@ -39,7 +38,12 @@ namespace Model
             }
             set
             {
-                _name = CheckString(value, nameof(Name));
+                _name = ConvertToRightRegister
+                    (CheckString(value, nameof(Name)));
+                if (_surname != null)
+                {
+                    CheckLanguage(_name, _surname);
+                }
             }
         }
 
@@ -54,7 +58,12 @@ namespace Model
             }
             set
             {
-                _surname = CheckString(value, nameof(Surname));
+                _surname = ConvertToRightRegister
+                    (CheckString(value, nameof(Surname)));
+                if (_name != null)
+                {
+                    CheckLanguage(_name, _surname);
+                }
             }
         }
 
@@ -66,15 +75,18 @@ namespace Model
             get
             {
                 return _age;
-
             }
             set
             {
-                if (value < 0)
+                if (value > 150 | value == 0)
                 {
-                    // TODO: вынести в консоль
-                    throw new Exception($"Введён некорректный возвраст, " +
-                        $"введите положительное число!");
+
+                    throw new ArgumentException($"Введён некорректный возвраст, " +
+                        $"введите возраст от 1 до 150 лет!");
+                }
+                else
+                {
+                    _age = value;
                 }
             }
         }
@@ -82,8 +94,27 @@ namespace Model
         /// <summary>
         /// Задание гендера.
         /// </summary>
-        public Gender Gender { get; set; }
+        public Gender Gender
+        {
+            get
+            {
+                return _gender;
+            }
+            set
+            {
+                _gender = value;
+            }
 
+        }
+
+        /// <summary>
+        /// Проверка на пустую строку.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="propertiname"></param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException"></exception>
+        /// <exception cref="System.ArgumentException"></exception>
         private string CheckString(string value, string propertiname)
         {
             if (value == null)
@@ -110,58 +141,54 @@ namespace Model
         }
 
         /// <summary>
-        /// Метод для ловли ошибок.
+        /// Конструктор 1.
         /// </summary>
-        /// <param name="name"> имя.</param>
+        public Person()
+        { }
+
+        /// <summary>
+        /// Конструктор 2.
+        /// </summary>
+        /// <param name="name"></param>
         /// <param name="surname"></param>
         /// <param name="age"></param>
-        /// <exception cref="System.ArgumentException"></exception>
+        /// <param name="gender"></param>
         public Person(string name, string surname, int age, Gender gender)
         {
-            if (name == null)
-            {
-                throw new System.ArgumentNullException("Name is not be null!");
-            }
-
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new System.ArgumentException("Name is not be emptu!");
-            }
-
             _name = name;
             _surname = surname;
             _age = age;
             _gender = gender;
         }
 
+        /// <summary>
+        /// Проверка на ввод имени или фамилии на одном языке.
+        /// Возможность ввода двойного имени и фамилии.
+        /// </summary>
+        /// <param name="nameOrSurname"></param>
+        /// <returns></returns>
+        /// <exception cref="FormatException"></exception>
+        public static string CheckNameSurname(string nameOrSurname)
+        {
+            string regex = @"(^[А-я]+(-[А-я])?[А-я]*$)|(^[A-z]+(-[A-z])?[A-z]*$)";
+            Regex nameLanguage = new Regex(regex);
+
+            if (!nameLanguage.IsMatch(nameOrSurname))
+            {
+                throw new FormatException("Введёное слово не распознано." +
+                    " Введите еще раз!");
+            }
+            return nameOrSurname;
+        }
 
         /// <summary>
-        /// Проверка ввода имени и фамилии.
-        /// Замена регистра первой буквы.
+        /// Преобразование регистра первой буквы.
         /// </summary>
         /// <returns></returns>
-        public static string CheckNameSurname(string surnameOrName)
+        public static string ConvertToRightRegister(string surnameOrName)
         {
-            // Только буквы
-            Regex regex = new Regex(@"[а-я,А-Я,A-z,a-z]+[-]
-                   [а-я,А-Я,A-z,a-z]+\b|[а-я,А-Я,A-z,a-z]+\b");
-
-            while (true)
-            {
-
-                while (!regex.IsMatch(surnameOrName))
-                {
-                    // TODO: вынести в консоль
-                    throw new Exception("Не удалось распознать имя/фамилию");
-                    // Console.WriteLine("Не удалось распознать имя/фамилию" +
-                    //                    ", введите снова!");
-                }
-                break;
-            }
-
-            //TODO: заглавные буквы и во второй части двйной фамилии
             surnameOrName = surnameOrName[0].ToString().ToUpper()
-                    + surnameOrName.Substring(1);
+                        + surnameOrName.Substring(1);
 
             Regex regex1 = new Regex(@"[-]");
             if (regex1.IsMatch(surnameOrName))
@@ -173,8 +200,50 @@ namespace Model
                 word2 = word2[0].ToString().ToUpper() + word2.Substring(1);
                 surnameOrName = word1 + "-" + word2;
             }
-
             return surnameOrName;
+        }
+
+        /// <summary>
+        /// Сравнение языка имени и фамилии.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="surname"></param>
+        /// <exception cref="ArgumentException"></exception>
+        public void CheckLanguage(string name, string surname)
+        {
+            int nameLang = DefinуLanguage(name);
+            int surnameLang = DefinуLanguage(surname);
+            if (nameLang != surnameLang)
+            {
+                throw new ArgumentException("Язык имени и фамилии должен совпадать.");
+            }
+        }
+
+        /// <summary>
+        /// Проверка на язык.
+        /// 0 - английский.
+        /// 1 - русский.
+        /// 2 - ошибка.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns> 1, 2 или 3.</returns>
+        public static int DefinуLanguage(string str)
+        {
+            Regex latin = new Regex(@"[a-zA-Z]");
+            Regex cyrillic = new Regex(@"[а-яА-Я]");
+
+            if (latin.IsMatch(str))
+            {
+                return 0;
+            }
+            else if (cyrillic.IsMatch(str))
+            {
+                return 1;
+            }
+            else
+            {
+                return 2;
+            }
         }
     }
 }

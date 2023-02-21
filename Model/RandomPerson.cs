@@ -1,6 +1,10 @@
 
 namespace Model
 {
+    /// <summary>
+    /// Класс для создания
+    /// рандомного человека.
+    /// </summary>
     public class RandomPerson
     {
         /// <summary>
@@ -14,15 +18,15 @@ namespace Model
             string[] wemenName = { "Инна", "Полина", "Мария", "Алиса",
                 "Томара", "Екатерина", "Анна", "Римма" };
 
-            string[] menSurname = { "Иванов", "Пётров", "Пупкин", "Мишуткин",
+            string[] menSurname = { "Иванов", "Петров", "Пупкин", "Мишуткин",
                 "Абрикосов", "Веников", "Сомин", "Котов" };
             string[] wemenSurname = { "Романова", "Поликарпова", "Маринина",
                 "Алъенок", "Тришина", "Норкина", "Васильева", "Приходько" };
 
-            Random rnd = new Random();
+            Random random = new Random();
 
-            Gender gender = (Gender)rnd.Next(2);
-            int age = rnd.Next(1, 100);
+            Gender gender = (Gender)random.Next(2);
+            int age = random.Next(1, 100);
             string name;
             string surname;
 
@@ -37,8 +41,7 @@ namespace Model
                 surname = wemenSurname[new Random().Next(1, wemenSurname.Length)];
             }
 
-            Person p = new Person(name, surname, age, gender);
-            return p;
+            return new Person(name, surname, age, gender);
         }
     }
 }
