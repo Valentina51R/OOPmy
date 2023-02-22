@@ -125,13 +125,18 @@ namespace ConsoleApp
                     action.Invoke();
                     return;
                 }
-                catch (ArgumentException exstption)
+                catch (Exception exception)
                 {
-                    Console.WriteLine($"Incorrect {propertyName}. Error: {exstption.Message}");
-                }
-                catch (FormatException exstption)
-                {
-                    Console.WriteLine($"Incorrect {propertyName}. Error: {exstption.Message}");
+                    if (typeof(exception) == AgrumentException
+                        || typeof(exception) == FormatException)
+                    {
+                        Console.WriteLine($"Incorrect {propertyName}. " +
+                            $"Error: {exception.Message}");
+                    }
+                    else
+                    {
+                        throw exception;
+                    }
                 }
             }
         }

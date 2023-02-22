@@ -6,6 +6,7 @@ namespace Model
     /// </summary>
     public class PersonList
     {
+        //TODO: XML
         private List<Person> _people = new List<Person>();
 
         /// <summary>
@@ -54,7 +55,6 @@ namespace Model
         /// <returns></returns>
         public int DeleteBySurname(string surname)
         {
-
             // Удаляет элементы из списка по условию
             // и возвращает кол-во удалений.
             int count = _people.RemoveAll(s => s.Surname == surname);

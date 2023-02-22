@@ -78,9 +78,10 @@ namespace Model
             }
             set
             {
-                if (value > 150 | value == 0)
+                //TODO: duplication
+                if (value > 150 || value == 0)
                 {
-
+                    //TODO: duplication
                     throw new ArgumentException($"Введён некорректный возвраст, " +
                         $"введите возраст от 1 до 150 лет!");
                 }
@@ -211,23 +212,25 @@ namespace Model
         /// <exception cref="ArgumentException"></exception>
         public void CheckLanguage(string name, string surname)
         {
-            int nameLang = DefinуLanguage(name);
-            int surnameLang = DefinуLanguage(surname);
+            int nameLang = DefineLanguage(name);
+            int surnameLang = DefineLanguage(surname);
             if (nameLang != surnameLang)
             {
                 throw new ArgumentException("Язык имени и фамилии должен совпадать.");
             }
         }
 
+        //TODO: enumeration
         /// <summary>
         /// Проверка на язык.
         /// 0 - английский.
         /// 1 - русский.
         /// 2 - ошибка.
         /// </summary>
+        /// //TODO: RSDN
         /// <param name="str"></param>
         /// <returns> 1, 2 или 3.</returns>
-        public static int DefinуLanguage(string str)
+        public static int DefineLanguage(string str)
         {
             Regex latin = new Regex(@"[a-zA-Z]");
             Regex cyrillic = new Regex(@"[а-яА-Я]");
