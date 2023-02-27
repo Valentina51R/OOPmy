@@ -33,10 +33,9 @@ namespace ConsoleApp
         /// <exception cref="ArgumentException"></exception>
         public static string CheckNames(string word)
         {
-            // Только буквы и тире
-            Regex regex = new Regex(@"^[A-z,А-я,-]+$");
+            Regex wordsAndHyphens = new Regex(@"^[A-z,А-я,-]+$");
 
-            if (!regex.IsMatch(word))
+            if (!wordsAndHyphens.IsMatch(word))
             {
                 throw new ArgumentException("Не удалось распознать" +
                     " имя/фамилию, введите ещё раз!" +
@@ -73,7 +72,8 @@ namespace ConsoleApp
                 (new Action(() =>
                 {
                     Console.Write($"Введите возраст человека:");
-                    bool result = ushort.TryParse(Console.ReadLine(), out ushort age);
+                    bool result = ushort.TryParse(Console.ReadLine(),
+                        out ushort age);
                     if(result != true)
                     {
                         throw new ArgumentException("Возраст должен быть" +
@@ -95,8 +95,8 @@ namespace ConsoleApp
                     }
                     else
                     {
-                        throw new ArgumentException("Введён некорректный пол," +
-                            " введите м(m) или ж(w)!");
+                        throw new ArgumentException("Введён некорректный" +
+                            " пол, введите м(m) или ж(w)!");
                     }
                 }), "gender")
             };
@@ -127,8 +127,8 @@ namespace ConsoleApp
                 }
                 catch (Exception exception)
                 {
-                    if (typeof(exception) == AgrumentException
-                        || typeof(exception) == FormatException)
+                    if (exception.GetType() == typeof(ArgumentException)
+                        || exception.GetType() == typeof(FormatException))
                     {
                         Console.WriteLine($"Incorrect {propertyName}. " +
                             $"Error: {exception.Message}");

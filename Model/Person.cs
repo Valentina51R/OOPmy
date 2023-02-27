@@ -28,6 +28,16 @@ namespace Model
         private Gender _gender;
 
         /// <summary>
+        /// Максимальный возраст.
+        /// </summary>
+        private const int _max = 150;
+
+        /// <summary>
+        /// Минимальный возраст.
+        /// </summary>
+        private const int _min = 1;
+
+        /// <summary>
         /// Задание имени.
         /// </summary>
         public string Name
@@ -78,12 +88,11 @@ namespace Model
             }
             set
             {
-                //TODO: duplication
-                if (value > 150 || value == 0)
+                if (value > _max || value < _min)
                 {
-                    //TODO: duplication
-                    throw new ArgumentException($"Введён некорректный возвраст, " +
-                        $"введите возраст от 1 до 150 лет!");
+                    throw new ArgumentException($"Введён некорректный" +
+                        $" возвраст, введите возраст" +
+                        $" от {_min} до {_max} лет!");
                 }
                 else
                 {
@@ -120,12 +129,14 @@ namespace Model
         {
             if (value == null)
             {
-                throw new System.ArgumentNullException($"{propertiname} is not be null!");
+                throw new System.ArgumentNullException($"{propertiname} " +
+                    $"is not be null!");
             }
 
             if (string.IsNullOrEmpty(value))
             {
-                throw new System.ArgumentException($"{propertiname} is not be emptu!");
+                throw new System.ArgumentException($"{propertiname} " +
+                    $"is not be emptu!");
             }
             return value;
         }
@@ -171,8 +182,9 @@ namespace Model
         /// <exception cref="FormatException"></exception>
         public static string CheckNameSurname(string nameOrSurname)
         {
-            string regex = @"(^[А-я]+(-[А-я])?[А-я]*$)|(^[A-z]+(-[A-z])?[A-z]*$)";
-            Regex nameLanguage = new Regex(regex);
+            string doubleNameSurname = @"(^[А-я]+(-[А-я])?[А-я]*$)" +
+                "|(^[A-z]+(-[A-z])?[A-z]*$)";
+            Regex nameLanguage = new Regex(doubleNameSurname);
 
             if (!nameLanguage.IsMatch(nameOrSurname))
             {
@@ -205,47 +217,44 @@ namespace Model
         }
 
         /// <summary>
-        /// Сравнение языка имени и фамилии.
+        /// Сравнения языка имени и фамилии.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="surname"></param>
         /// <exception cref="ArgumentException"></exception>
         public void CheckLanguage(string name, string surname)
         {
-            int nameLang = DefineLanguage(name);
-            int surnameLang = DefineLanguage(surname);
+            Languege nameLang = DefineLanguage(name);
+            Languege surnameLang = DefineLanguage(surname);
             if (nameLang != surnameLang)
             {
-                throw new ArgumentException("Язык имени и фамилии должен совпадать.");
+                throw new ArgumentException("Язык имени и фамилии" +
+                    " должен совпадать.");
             }
         }
 
-        //TODO: enumeration
         /// <summary>
         /// Проверка на язык.
-        /// 0 - английский.
-        /// 1 - русский.
-        /// 2 - ошибка.
         /// </summary>
-        /// //TODO: RSDN
         /// <param name="str"></param>
-        /// <returns> 1, 2 или 3.</returns>
-        public static int DefineLanguage(string str)
+        /// <returns> Languege.</returns>
+        public static Languege DefineLanguage(string word)
         {
             Regex latin = new Regex(@"[a-zA-Z]");
             Regex cyrillic = new Regex(@"[а-яА-Я]");
 
-            if (latin.IsMatch(str))
+            if (latin.IsMatch(word))
             {
-                return 0;
+                return Languege.Latin;
             }
-            else if (cyrillic.IsMatch(str))
+            else if (cyrillic.IsMatch(word))
             {
-                return 1;
+                return Languege.Сyrillic;
             }
             else
             {
-                return 2;
+                throw new ArgumentException("Язык не распознан.\n" +
+                    "Разрешено вводить только символы кирицицы и латиницы.");
             }
         }
     }
