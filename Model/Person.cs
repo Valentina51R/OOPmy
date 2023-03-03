@@ -20,7 +20,7 @@ namespace Model
         /// <summary>
         /// Возраст.
         /// </summary>
-        private int _age;
+        protected int _age;
 
         /// <summary>
         /// Пол.
@@ -80,7 +80,7 @@ namespace Model
         /// <summary>
         /// Задание возраста.
         /// </summary>
-        public int Age
+        public virtual int Age
         {
             get
             {
@@ -88,6 +88,7 @@ namespace Model
             }
             set
             {
+                //TODO: нужны ли здесь провреки если они есть в Adult и Child
                 if (value > _max || value < _min)
                 {
                     throw new ArgumentException($"Введён некорректный" +
@@ -144,12 +145,14 @@ namespace Model
 
         /// <summary>
         /// Метод возвращает информацию о человеке в виде строки.
+        /// Метод доступен для переопределения, поэтому в
+        /// базовом классе помечается модификатором virtual
         /// </summary>
         /// <returns>Информацию о человеке в воиде строки.</returns>
-        public string GetInfo()
+        public virtual string GetInfo()
         {
-            return $"Perconname: {_name}, Sername: {_surname}," +
-                $" Age: {_age}, Gender: {_gender}";
+            return $"Name: {_name} {_surname}," +
+                $" Age: {_age}, Gender: {_gender}, ";
         }
 
         /// <summary>

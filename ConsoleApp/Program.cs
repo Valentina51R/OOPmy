@@ -18,102 +18,47 @@ namespace ConsoleApp
 
             // а.Создание программно двух списков персон,
             // в каждом из которых будет по три человека.
-            Console.WriteLine("\n\t\tСоздание программно двух списков" +
-                " персон, в каждом из которых будет по три человека.");
+            Console.WriteLine("\n\t\tСоздание программно списка" +
+                " персон, состоящего из семи человек.");
             _ = Console.ReadKey();
 
+            PersonList personlist = new PersonList();
 
-            PersonList personlist1 = new PersonList();
-            PersonList personlist2 = new PersonList();
-
-
-            // Создание исходного списка 1
-            personlist1.Add(RandomPerson.GetRandomPerson());
-            personlist1.Add(RandomPerson.GetRandomPerson());
-            personlist1.Add(RandomPerson.GetRandomPerson());
-
-            // Создание исходного списка 2
-            personlist2.Add(RandomPerson.GetRandomPerson());
-            personlist2.Add(RandomPerson.GetRandomPerson());
-            personlist2.Add(RandomPerson.GetRandomPerson());
+            for (int i = 0; i < 7; i++)
+            {
+                personlist.Add(RandomPerson.GetRandomAdultOrChild());
+            }
 
             // b. Вывод содержимое каждого списка на экран
             Console.WriteLine("\n\t\tВывод списков на экран.");
             _ = Console.ReadKey();
 
-            // Печать исходного списка 1
-            Console.WriteLine("Список №1:");
-            ConsolePerson.Print(personlist1);
+            // Печать исходного списка
+            Console.WriteLine("Список:");
+            ConsolePerson.Print(personlist);
 
-            // Печать исходного списка 2
-            Console.WriteLine("\nСписок №2:");
-            ConsolePerson.Print(personlist2);
+            Console.WriteLine("\n\tОпределение" +
+                " типа четвёртого человека в списке.\n");
 
-            // c. Добавление нового человека в список 1
-            Console.WriteLine("\n\t\tДобавление человека в список №1.");
-            _ = Console.ReadKey();
-            personlist1.Add(ConsolePerson.InputPersonByConsole());
+            Person pers = personlist.FindByIndex(3);
 
-            // Печать списка 1
-            Console.WriteLine("\nСписок №1 с добавлением:");
-            ConsolePerson.Print(personlist1);
-
-            // d.Скопируйте второго человека из первого списка
-            // в конец второго списка.
-            // Покажите, что один и тот же человек
-            // находится в обоих списках.
-            Console.WriteLine();
-            Console.WriteLine("\n\t\tКопирование 2-ого человека из" +
-                " первого списка в конец второго списка.");
-            _ = Console.ReadKey();
-            try
+            switch (pers)
             {
-                personlist2.Add(personlist1.FindByIndex(1));
-            }
-            catch (IndexOutOfRangeException exception)
-            {
-                Console.WriteLine($"Error: {exception.Message}");
+                case Adult adult:
+                    {
+                        Console.WriteLine("This is an adult!");
+                        Console.WriteLine(adult.PersonalityType());
+                        break;
+                    }
+
+                case Child child:
+                    {
+                        Console.WriteLine("It's a child!");
+                        Console.WriteLine(child.Hobby());
+                        break;
+                    }
             }
 
-            Console.WriteLine("\nСписок №1:");
-            ConsolePerson.Print(personlist1);
-
-            Console.WriteLine("\nСписок №2:");
-            ConsolePerson.Print(personlist2);
-
-            // e.Удалите второго человека из первого списка. Покажите, что
-            // удаление человека из первого списка
-            // не привело к уничтожениютэтого же человека во втором списке.
-            Console.WriteLine("\n\t\tУдаление второго человека" +
-                " из первого списка.");
-            _ = Console.ReadKey();
-            try
-            {
-                personlist1.DeleteByIndex(1);
-            }
-            catch (IndexOutOfRangeException exception)
-            {
-                Console.WriteLine($"Error: {exception.Message}");
-            }
-
-            Console.WriteLine("\nСписок №1:");
-            ConsolePerson.Print(personlist1);
-
-            Console.WriteLine("\nСписок №2:");
-            ConsolePerson.Print(personlist2);
-
-            // f.Очистите второй список.
-            Console.WriteLine("\n\t\tОчищение второго списка.");
-            _ = Console.ReadKey();
-            personlist2.DeleteAll();
-
-            Console.WriteLine("\nСписок №1:");
-            ConsolePerson.Print(personlist1);
-
-            Console.WriteLine("\nСписок №2:");
-            ConsolePerson.Print(personlist2);
-
-            _ = Console.ReadKey();
         }
     }
 }

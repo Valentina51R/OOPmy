@@ -20,6 +20,7 @@ namespace ConsoleApp
             for (int i = 0; i < count; i++)
             {
                 Person pers = people.FindByIndex(i);
+                Console.WriteLine($"\nPerson №{i + 1}:");
                 Console.WriteLine(pers.GetInfo());
             }
         }
