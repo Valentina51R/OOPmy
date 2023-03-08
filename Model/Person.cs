@@ -10,12 +10,12 @@ namespace Model
         /// <summary>
         /// Имя.
         /// </summary>
-        private string _name;
+        protected string _name;
 
         /// <summary>
         /// Фамилия.
         /// </summary>
-        private string _surname;
+        protected string _surname;
 
         /// <summary>
         /// Возраст.
@@ -25,7 +25,7 @@ namespace Model
         /// <summary>
         /// Пол.
         /// </summary>
-        private Gender _gender;
+        protected Gender _gender;
 
         /// <summary>
         /// Максимальный возраст.

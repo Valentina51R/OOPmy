@@ -140,6 +140,14 @@ namespace Model
         }
 
         /// <summary>
+        /// Пустой конструктор
+        /// </summary>
+        public Adult() : base()
+        {
+
+        }
+
+        /// <summary>
         /// Метод получения информации
         /// </summary>
         /// <returns></returns>
