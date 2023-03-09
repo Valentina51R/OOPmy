@@ -67,11 +67,11 @@ namespace ConsoleApp
         /// Добавление персоны через консоль.
         /// </summary>
         /// <returns> Новая персона.</returns>
-        public static Person InputPersonByConsole()
+        public static PersonBase InputPersonByConsole()
         {
-            // TODO: Нельзя создавать экземпляры абстрактного класса перосон
-            // Поэтому будет класс Adult
-            Adult newperson = new Adult();
+            // Нельзя создавать экземпляры абстрактного класса перосон
+            // TODO: дать пользователю выбор кого вводить ребёнка или взрослого
+            PersonBase newperson = new Adult();
 
             var actionList = new List<(Action, string)>
             {
@@ -79,13 +79,13 @@ namespace ConsoleApp
                 {
                     Console.Write($"\nВведите имя человека: ");
                     string name = CheckNames(Console.ReadLine());
-                    newperson.Name = Person.CheckNameSurname(name);
+                    newperson.Name = PersonBase.CheckNameSurname(name);
                 }), "name"),
                 (new Action(() =>
                 {
                     Console.Write($"Введите фамилию человека: ");
                     string surname = CheckNames(Console.ReadLine());
-                    newperson.Surname = Person.CheckNameSurname(surname);
+                    newperson.Surname = PersonBase.CheckNameSurname(surname);
                 }), "surname"),
                 (new Action(() =>
                 {

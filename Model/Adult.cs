@@ -5,7 +5,7 @@ namespace Model
     /// <summary>
     /// Класс для описания взрослого человека
     /// </summary>
-    public class Adult : Person
+    public class Adult : PersonBase
     {
         /// <summary>
         /// Минимальный возраст взрослого
@@ -153,8 +153,7 @@ namespace Model
         /// <returns></returns>
         public override string GetInfo()
         {
-            string personInfo = $"Name: {_name} {_surname}," +
-                $" Age: {_age}, Gender: {_gender}, ";
+            string personInfo = base.GetInfo();
             personInfo +=
                     $"\nPassport data: {Рassport}, " +
                     $"Marital status: {MaritalStatus}, ";

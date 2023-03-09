@@ -4,7 +4,7 @@ namespace Model
     /// <summary>
     /// Класс для описания ребёнка
     /// </summary>
-    public class Child : Person
+    public class Child : PersonBase
     {
         /// <summary>
         /// Минимальный возраст ребёнка
@@ -106,8 +106,7 @@ namespace Model
         /// <returns></returns>
         public override string GetInfo()
         {
-            string personInfo = $"Name: {_name} {_surname}," +
-                $" Age: {_age}, Gender: {_gender}, ";
+            string personInfo = base.GetInfo();
             // TODO:дублирование проверки матери и отца
             if (Mother != null)
             {

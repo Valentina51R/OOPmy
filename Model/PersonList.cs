@@ -9,13 +9,13 @@ namespace Model
         /// <summary>
         /// Список персон
         /// </summary>
-        private List<Person> _people = new List<Person>();
+        private List<PersonBase> _people = new List<PersonBase>();
 
         /// <summary>
         /// Добавление элемента.
         /// </summary>
         /// <param name="people"></param>
-        public void Add(Person person)
+        public void Add(PersonBase person)
         {
             _people.Add(person);
         }
@@ -68,7 +68,7 @@ namespace Model
         /// </summary>
         /// <param name="people"></param>
         /// <param name="index"></param>
-        public Person FindByIndex(int index)
+        public PersonBase FindByIndex(int index)
         {
             int countIndex = _people.Count - 1;
 

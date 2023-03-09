@@ -5,7 +5,7 @@ namespace Model
     /// <summary>
     /// Класс персоны.
     /// </summary>
-    public abstract class Person
+    public abstract class PersonBase
     {
         /// <summary>
         /// Имя.
@@ -26,16 +26,6 @@ namespace Model
         /// Пол.
         /// </summary>
         protected Gender _gender;
-
-        /// <summary>
-        /// Максимальный возраст.
-        /// </summary>
-        private const int _max = 150;
-
-        /// <summary>
-        /// Минимальный возраст.
-        /// </summary>
-        private const int _min = 1;
 
         /// <summary>
         /// Задание имени.
@@ -80,26 +70,10 @@ namespace Model
         /// <summary>
         /// Задание возраста.
         /// </summary>
-        public virtual int Age
+        public abstract int Age
         {
-            get
-            {
-                return _age;
-            }
-            set
-            {
-                //TODO: нужны ли здесь провреки если они есть в Adult и Child
-                if (value > _max || value < _min)
-                {
-                    throw new ArgumentException($"Введён некорректный" +
-                        $" возвраст, введите возраст" +
-                        $" от {_min} до {_max} лет!");
-                }
-                else
-                {
-                    _age = value;
-                }
-            }
+            get;
+            set;
         }
 
         /// <summary>
@@ -148,13 +122,17 @@ namespace Model
         /// Это абстрактный метoд, доступен для переопределения.
         /// </summary>
         /// <returns>Информацию о человеке в виде строки.</returns>
-        public abstract string GetInfo();
+        public virtual string GetInfo()
+        {
+            return $"Name: {_name} {_surname}," +
+               $" Age: {_age}, Gender: {_gender}, ";
+        }
 
 
         /// <summary>
         /// Конструктор 1.
         /// </summary>
-        public Person()
+        public PersonBase()
         { }
 
         /// <summary>
@@ -164,7 +142,7 @@ namespace Model
         /// <param name="surname"></param>
         /// <param name="age"></param>
         /// <param name="gender"></param>
-        public Person(string name, string surname, int age, Gender gender)
+        public PersonBase(string name, string surname, int age, Gender gender)
         {
             _name = name;
             _surname = surname;

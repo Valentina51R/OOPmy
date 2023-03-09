@@ -31,7 +31,7 @@ namespace Model
                 "Sommers", "Forbes", "Donovan", "Lockwood" };
 
 
-        public static Person GetRandomAdultOrChild()
+        public static PersonBase GetRandomAdultOrChild()
         {
             var who = _random.Next(0, 2);
             if (who > 0)
@@ -44,12 +44,12 @@ namespace Model
             }
         }
 
-        // TODO: попытка задания нужного гендера
+        // TODO: попытка задания нужного гендера, yourchoice норм?
         /// <summary>
         /// Создание рандомного человека
         /// </summary>
         /// <returns></returns>
-        public static void GetRandomPerson(Person person, string yourchoice = "rand")
+        public static void GetRandomPerson(PersonBase person, string yourchoice = "rand")
         {
             //Gender genderPerson = (Gender)_random.Next(2);
 
@@ -65,8 +65,7 @@ namespace Model
             {
                 person.Gender = (Gender)_random.Next(2);
             }
-            // TODO: разделить на взрослого и ребенка
-            person.Age = _random.Next(1, 100);
+
             string name;
             string surname;
 

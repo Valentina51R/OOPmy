@@ -40,7 +40,7 @@ namespace ConsoleApp
             Console.WriteLine("\n\tОпределение" +
                 " типа четвёртого человека в списке.\n");
 
-            Person person = personlist.FindByIndex(3);
+            PersonBase person = personlist.FindByIndex(3);
 
 
             switch (person)
