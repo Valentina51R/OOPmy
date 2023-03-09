@@ -9,9 +9,5 @@ namespace Model
     {
         Single,
         Married
-        // в разводе
-        // Divorced,
-        // вдова или вдовец
-        // Widowed
     }
 }

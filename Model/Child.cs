@@ -106,7 +106,8 @@ namespace Model
         /// <returns></returns>
         public override string GetInfo()
         {
-            string personInfo = base.GetInfo();
+            string personInfo = $"Name: {_name} {_surname}," +
+                $" Age: {_age}, Gender: {_gender}, ";
             // TODO:дублирование проверки матери и отца
             if (Mother != null)
             {
@@ -115,7 +116,7 @@ namespace Model
             }
             else
             {
-                personInfo += " No information about the mother. ";
+                personInfo += "\nNo information about the mother. ";
             }
 
             if (Fathert != null)

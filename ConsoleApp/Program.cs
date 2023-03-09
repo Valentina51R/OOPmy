@@ -40,9 +40,10 @@ namespace ConsoleApp
             Console.WriteLine("\n\tОпределение" +
                 " типа четвёртого человека в списке.\n");
 
-            Person pers = personlist.FindByIndex(3);
+            Person person = personlist.FindByIndex(3);
 
-            switch (pers)
+
+            switch (person)
             {
                 case Adult adult:
                     {
@@ -57,8 +58,9 @@ namespace ConsoleApp
                         Console.WriteLine(child.Hobby());
                         break;
                     }
+                default:
+                    break;
             }
-
         }
     }
 }

@@ -5,7 +5,7 @@ namespace Model
     /// <summary>
     /// Класс персоны.
     /// </summary>
-    public class Person
+    public abstract class Person
     {
         /// <summary>
         /// Имя.
@@ -145,15 +145,11 @@ namespace Model
 
         /// <summary>
         /// Метод возвращает информацию о человеке в виде строки.
-        /// Метод доступен для переопределения, поэтому в
-        /// базовом классе помечается модификатором virtual
+        /// Это абстрактный метoд, доступен для переопределения.
         /// </summary>
-        /// <returns>Информацию о человеке в воиде строки.</returns>
-        public virtual string GetInfo()
-        {
-            return $"Name: {_name} {_surname}," +
-                $" Age: {_age}, Gender: {_gender}, ";
-        }
+        /// <returns>Информацию о человеке в виде строки.</returns>
+        public abstract string GetInfo();
+
 
         /// <summary>
         /// Конструктор 1.
@@ -201,7 +197,7 @@ namespace Model
         /// Преобразование регистра первой буквы.
         /// </summary>
         /// <returns></returns>
-        public static string ConvertToRightRegister(string surnameOrName)
+        private static string ConvertToRightRegister(string surnameOrName)
         {
             surnameOrName = surnameOrName[0].ToString().ToUpper()
                         + surnameOrName.Substring(1);

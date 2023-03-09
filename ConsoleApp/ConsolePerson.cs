@@ -19,9 +19,24 @@ namespace ConsoleApp
 
             for (int i = 0; i < count; i++)
             {
-                Person pers = people.FindByIndex(i);
-                Console.WriteLine($"\nPerson №{i + 1}:");
-                Console.WriteLine(pers.GetInfo());
+                switch (people.FindByIndex(i))
+                {
+                    case Adult adult:
+                        {
+                            Console.WriteLine($"\nPerson №{i + 1}:");
+                            Console.WriteLine(adult.GetInfo());
+                            break;
+                        }
+
+                    case Child child:
+                        {
+                            Console.WriteLine($"\nPerson №{i + 1}:");
+                            Console.WriteLine(child.GetInfo());
+                            break;
+                        }
+                    default:
+                        break;
+                }
             }
         }
 
@@ -54,7 +69,9 @@ namespace ConsoleApp
         /// <returns> Новая персона.</returns>
         public static Person InputPersonByConsole()
         {
-            Person newperson = new Person();
+            // TODO: Нельзя создавать экземпляры абстрактного класса перосон
+            // Поэтому будет класс Adult
+            Adult newperson = new Adult();
 
             var actionList = new List<(Action, string)>
             {

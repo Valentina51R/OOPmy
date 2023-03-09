@@ -153,7 +153,8 @@ namespace Model
         /// <returns></returns>
         public override string GetInfo()
         {
-            string personInfo = base.GetInfo();
+            string personInfo = $"Name: {_name} {_surname}," +
+                $" Age: {_age}, Gender: {_gender}, ";
             personInfo +=
                     $"\nPassport data: {Рassport}, " +
                     $"Marital status: {MaritalStatus}, ";
@@ -180,30 +181,14 @@ namespace Model
         /// <returns></returns>
         public string PersonalityType()
         {
-            string[] persontype = {
-                "sanguine", "choleric",
-                "phlegmatic", "melancholic" };
+            string[] essence = {
+                "vampire", "werewolf",
+                "human", "witch" };
 
-            string type = persontype[new Random().Next(1, persontype.Length)];
+            string type = essence[new Random().Next(1, essence.Length)];
 
-            return $"This adult has a personality type: {type}";
+            return $"This adult is a: {type}";
         }
 
-        /*
-        /// <summary>
-        /// Конструктор.
-        /// </summary>
-        /// <param name="passport"></param>
-        /// <param name="maritalstatus"></param>
-        /// <param name="partner"></param>
-        /// <param name="job"></param>
-        public Adult(string passport, MaritalStatus maritalstatus, Adult partner, string job) : base(name, surname, age, gender)
-        {
-            _passport = passport;
-            _maritalstatus = maritalstatus;
-            _partner = partner;
-            _job = job;
-        }
-        */
     }
 }
