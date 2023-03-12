@@ -69,9 +69,50 @@ namespace ConsoleApp
         /// <returns> Новая персона.</returns>
         public static PersonBase InputPersonByConsole()
         {
-            // Нельзя создавать экземпляры абстрактного класса перосон
+
             // TODO: дать пользователю выбор кого вводить ребёнка или взрослого
+
+            Console.WriteLine($"Если хотите ввести нового взрослого напишите - 1," +
+                $"если ребёнка - 2: ");
+            int who = int.Parse(Console.ReadLine());
+            // По умолчанию - Взрослый
             PersonBase newperson = new Adult();
+            switch (who)
+            {
+                case 1:
+                    {
+                        newperson = new Adult();
+                        break;
+                    }
+
+                case 2:
+                    {
+                        newperson = new Child();
+                        break;
+                    }
+                default:
+                    break;
+            }
+
+            /*
+            var actionlistAdult = new List<(Action, string)>;
+            {
+                (new Action(() =>
+                {
+                    Console.Write($"\nВведите данные матери: ");
+                    newperson.Mother = ;
+                    string name = CheckNames(Console.ReadLine());
+                    newperson.Name = PersonBase.CheckNameSurname(name);
+                }), "name"),
+                (new Action(() =>
+                {
+                    Console.Write($"\nВведите наименование заведения," +
+                        $" где зарегистрирован ребёнок: ");
+                    string name = CheckNames(Console.ReadLine());
+                    newperson.Name = PersonBase.CheckNameSurname(name);
+                }), "name")
+            }
+            */
 
             var actionList = new List<(Action, string)>
             {
@@ -89,6 +130,7 @@ namespace ConsoleApp
                 }), "surname"),
                 (new Action(() =>
                 {
+                    // TODO: Не действует провера возраста.?
                     Console.Write($"Введите возраст человека:");
                     bool result = ushort.TryParse(Console.ReadLine(),
                         out ushort age);

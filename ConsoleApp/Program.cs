@@ -28,7 +28,7 @@ namespace ConsoleApp
             {
                 personlist.Add(RandomPerson.GetRandomAdultOrChild());
             }
-
+            /*
             // b. Вывод содержимое каждого списка на экран
             Console.WriteLine("\n\t\tВывод списков на экран.");
             _ = Console.ReadKey();
@@ -61,6 +61,15 @@ namespace ConsoleApp
                 default:
                     break;
             }
+            */
+            Console.WriteLine("\n\t\tДобавление человека в список №1.");
+            _ = Console.ReadKey();
+            personlist.Add(ConsolePerson.InputPersonByConsole());
+
+            Console.WriteLine("Список с добавлением:");
+            ConsolePerson.Print(personlist);
+
+
         }
     }
 }

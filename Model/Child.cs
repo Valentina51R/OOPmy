@@ -1,4 +1,6 @@
 
+using System.Xml.Linq;
+
 namespace Model
 {
     /// <summary>
@@ -73,7 +75,7 @@ namespace Model
         /// <summary>
         /// Задание отца.
         /// </summary>
-        public Adult Fathert
+        public Adult Father
         {
             get
             {
@@ -101,33 +103,36 @@ namespace Model
         }
 
         /// <summary>
+        /// Проверка есть ли родитель.
+        /// </summary>
+        /// <param name="perent"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        private string CheckParents(Adult perent, string name = "Mother")
+        {
+            if (perent != null)
+            {
+                return $"\n{name}: {perent.Name} " +
+                    $"{perent.Surname}, ";
+            }
+            else
+            {
+                return $"\nNo information about the {name}. ";
+            }
+        }
+
+        /// <summary>
         /// Метод получения информации
         /// </summary>
         /// <returns></returns>
         public override string GetInfo()
         {
             string personInfo = base.GetInfo();
-            // TODO:дублирование проверки матери и отца
-            if (Mother != null)
-            {
-                personInfo += $"\nMother: {Mother.Name} " +
-                    $"{Mother.Surname}, ";
-            }
-            else
-            {
-                personInfo += "\nNo information about the mother. ";
-            }
 
-            if (Fathert != null)
-            {
-                personInfo += $" Fathert: {Fathert.Name} " +
-                    $"{Fathert.Surname}, ";
-            }
-            else
-            {
-                personInfo += " No information about the fathert. ";
-            }
-            personInfo += "Place of study: ";
+            personInfo += CheckParents(Mother, "Mother");
+            personInfo += CheckParents(Father, "Father");
+
+            personInfo += "\nPlace of study: ";
             if (string.IsNullOrEmpty(Institution))
             {
                 personInfo += "The child is not registered in kindergarten or school.";

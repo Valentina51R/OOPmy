@@ -156,13 +156,13 @@ namespace Model
             string personInfo = base.GetInfo();
             personInfo +=
                     $"\nPassport data: {Рassport}, " +
-                    $"Marital status: {MaritalStatus}, ";
+                    $"\nMarital status: {MaritalStatus}, ";
             if (MaritalStatus == MaritalStatus.Married)
             {
                 personInfo += $"Spouse: {Partner.Name} " +
                     $"{Partner.Surname}, ";
             }
-            personInfo += "Job: ";
+            personInfo += "\nJob: ";
             if (string.IsNullOrEmpty(Job))
             {
                 personInfo += "Unemployed. ";

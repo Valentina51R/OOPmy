@@ -99,7 +99,6 @@ namespace Model
 
             if (maritalstatus == MaritalStatus.Married)
             {
-                //TODO: должен быть партнёр противоположного пола
                 if (randomAdult.Gender == Gender.Male)
                 {
                     randomAdult.Partner = GetRandomAdult(MaritalStatus.Married, randomAdult, "wemen");
@@ -141,16 +140,14 @@ namespace Model
 
             if (mother > 0)
             {
-                // TODO: только женщина
-                randomChild.Mother = GetRandomAdult(MaritalStatus.Married, randomChild.Fathert, "wemen");
+                randomChild.Mother = GetRandomAdult(MaritalStatus.Married, randomChild.Father, "wemen");
             }
 
             var fathert = _random.Next(0, 4);
 
             if (fathert > 0)
             {
-                // TODO: только мужчина
-                randomChild.Fathert = GetRandomAdult(MaritalStatus.Married, randomChild.Mother, "men");
+                randomChild.Father = GetRandomAdult(MaritalStatus.Married, randomChild.Mother, "men");
             }
 
             string[] kindergarten = {
