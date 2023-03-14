@@ -1,5 +1,4 @@
 
-using System.Xml.Linq;
 
 namespace Model
 {
@@ -18,15 +17,6 @@ namespace Model
         /// </summary>
         public const int MaxChildAge = 18;
 
-        /// <summary>
-        /// Мать.
-        /// </summary>
-        private Adult _mother;
-
-        /// <summary>
-        /// Отец.
-        /// </summary>
-        private Adult _father;
 
         /// <summary>
         /// Садик / шкала.
@@ -44,7 +34,7 @@ namespace Model
             }
             set
             {
-                if (value > MaxChildAge && value < MinChildAge)
+                if (value > MaxChildAge || value < MinChildAge)
                 {
                     throw new ArgumentException($"Введён некорректный" +
                         $" возвраст ребёнка, введите возраст" +
@@ -57,35 +47,18 @@ namespace Model
             }
         }
 
+
         /// <summary>
         /// Задание матери.
         /// </summary>
-        public Adult Mother
-        {
-            get
-            {
-                return _mother;
-            }
-            set
-            {
-                _mother = value;
-            }
-        }
+        public Adult Mother { get; set; }
+
 
         /// <summary>
         /// Задание отца.
         /// </summary>
-        public Adult Father
-        {
-            get
-            {
-                return _father;
-            }
-            set
-            {
-                _father = value;
-            }
-        }
+        public Adult Father { get; set; }
+
 
         /// <summary>
         /// Задание детсада/школы.
@@ -135,7 +108,8 @@ namespace Model
             personInfo += "\nPlace of study: ";
             if (string.IsNullOrEmpty(Institution))
             {
-                personInfo += "The child is not registered in kindergarten or school.";
+                personInfo += "The child is not registered" +
+                    " in kindergarten or school.";
             }
             else
             {
@@ -145,15 +119,19 @@ namespace Model
             return personInfo;
         }
 
-        public string Hobby()
+        /// <summary>
+        /// Определение любимого блюда ребёнка.
+        /// </summary>
+        /// <returns></returns>
+        public string Dishes()
         {
-            string[] hobbys = {
-                "swimming", "tennis", "music",
-                "football", "drawing" };
+            string[] meals = {
+                "ice cream", "cake", "steak",
+                "chocolate", "soup" };
 
-            string type = hobbys[new Random().Next(1, hobbys.Length)];
+            string meal = meals[new Random().Next(1, meals.Length)];
 
-            return $"The child is engaged in {type}.";
+            return $"The {Name} {Surname} likes to eat {meal}.";
         }
 
     }

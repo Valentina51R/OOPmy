@@ -111,10 +111,10 @@ namespace Model
             else
             {
                 randomAdult.MaritalStatus = status;
-                //randomAdult.Partner = partner;
             }
-            string[] job = { "СО", "РусГидро", "Сбербанк",
-                "КрасФарма", "НорНикель", "РосБанк" };
+
+            string[] job = { "SO \"UES\" ", "RusGidro", "Sberbank",
+                "Bakery \"Plump bun\"", "Norilsk Nickel", "Rosbank" };
 
             var getjob = _random.Next(0, 4);
 
@@ -123,7 +123,8 @@ namespace Model
                 randomAdult.Job = job[_random.Next(0, job.Length)];
             }
 
-            var passport = _random.Next(100000000, 999999999).ToString();
+            var passport = (uint)_random.Next
+                (Adult.MinPassportNumber, Adult.MaxPassportNumber);
             randomAdult.Рassport = passport;
 
             return randomAdult;
@@ -134,20 +135,23 @@ namespace Model
             Child randomChild = new Child();
             GetRandomPerson(randomChild);
 
-            randomChild.Age = _random.Next(Child.MinChildAge, Child.MaxChildAge);
+            randomChild.Age = _random.Next
+                (Child.MinChildAge, Child.MaxChildAge);
 
             var mother = _random.Next(0, 4);
 
             if (mother > 0)
             {
-                randomChild.Mother = GetRandomAdult(MaritalStatus.Married, randomChild.Father, "wemen");
+                randomChild.Mother = GetRandomAdult
+                    (MaritalStatus.Married, randomChild.Father, "wemen");
             }
 
             var fathert = _random.Next(0, 4);
 
             if (fathert > 0)
             {
-                randomChild.Father = GetRandomAdult(MaritalStatus.Married, randomChild.Mother, "men");
+                randomChild.Father = GetRandomAdult
+                    (MaritalStatus.Married, randomChild.Mother, "men");
             }
 
             string[] kindergarten = {
@@ -164,11 +168,13 @@ namespace Model
             {
                 if (randomChild.Age < 8)
                 {
-                    randomChild.Institution = kindergarten[_random.Next(1, kindergarten.Length)];
+                    randomChild.Institution = kindergarten
+                        [_random.Next(1, kindergarten.Length)];
                 }
                 else
                 {
-                    randomChild.Institution = school[_random.Next(1, school.Length)];
+                    randomChild.Institution = school
+                        [_random.Next(1, school.Length)];
                 }
             }
 

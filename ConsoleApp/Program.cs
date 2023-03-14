@@ -12,14 +12,14 @@ namespace ConsoleApp
         /// </summary>
         private static void Main()
         {
-            Console.WriteLine("Каждый новый шаг выполняется по нажатию" +
-                " любой клавиши клавиатуры.\nНажмите любую клавишу.");
+            Console.WriteLine("Each new step is performed by" +
+                " pressing any keyboard key.\nPress any key.");
             _ = Console.ReadKey();
 
             // а.Создание программно двух списков персон,
             // в каждом из которых будет по три человека.
-            Console.WriteLine("\n\t\tСоздание программно списка" +
-                " персон, состоящего из семи человек.");
+            Console.WriteLine("\n\t\tCreating programmatically" +
+                " a list of persons consisting of seven people.");
             _ = Console.ReadKey();
 
             PersonList personlist = new PersonList();
@@ -28,49 +28,45 @@ namespace ConsoleApp
             {
                 personlist.Add(RandomPerson.GetRandomAdultOrChild());
             }
-            
-            // b. Вывод содержимое каждого списка на экран
-            Console.WriteLine("\n\t\tВывод списков на экран.");
-            _ = Console.ReadKey();
 
             // Печать исходного списка
-            Console.WriteLine("Список:");
+            Console.WriteLine("List of people:");
             ConsolePerson.Print(personlist);
 
-            Console.WriteLine("\n\tОпределение" +
-                " типа четвёртого человека в списке.\n");
+            Console.WriteLine("\n\tThe fourth person on the list.\n");
+            _ = Console.ReadKey();
 
             PersonBase person = personlist.FindByIndex(3);
 
-
             switch (person)
             {
-                case Adult adult:
+                case Adult:
                     {
+                        Adult adult = (Adult)person;
                         Console.WriteLine("This is an adult!");
-                        Console.WriteLine(adult.PersonalityType());
+                        Console.WriteLine(adult.MythologicalCreature());
                         break;
                     }
 
-                case Child child:
+                case Child:
                     {
+                        Child child = (Child)person;
                         Console.WriteLine("It's a child!");
-                        Console.WriteLine(child.Hobby());
+                        Console.WriteLine(child.Dishes());
                         break;
                     }
                 default:
                     break;
             }
 
-            /*
-            Console.WriteLine("\n\t\tДобавление человека в список №1.");
+            Console.WriteLine("\n\t\tSomething interesting!!!" +
+                "\n\t\tCreating a new person.");
             _ = Console.ReadKey();
-            personlist.Add(ConsolePerson.InputPersonByConsole());
 
-            Console.WriteLine("Список с добавлением:");
-            ConsolePerson.Print(personlist);
-            */
+            PersonBase newperson = ConsolePerson.InputPersonByConsole();
 
+            Console.WriteLine("\nA new person: ");
+            Console.WriteLine(newperson.GetInfo());
         }
     }
 }

@@ -70,27 +70,14 @@ namespace Model
         /// <summary>
         /// Задание возраста.
         /// </summary>
-        public abstract int Age
-        {
-            get;
-            set;
-        }
+        public abstract int Age { get; set; }
+
 
         /// <summary>
         /// Задание гендера.
         /// </summary>
-        public Gender Gender
-        {
-            get
-            {
-                return _gender;
-            }
-            set
-            {
-                _gender = value;
-            }
+        public Gender Gender { get; set; }
 
-        }
 
         /// <summary>
         /// Проверка на пустую строку.
@@ -124,8 +111,8 @@ namespace Model
         /// <returns>Информацию о человеке в виде строки.</returns>
         public virtual string GetInfo()
         {
-            return $"Name: {_name} {_surname}," +
-               $" Age: {_age}, Gender: {_gender}, ";
+            return $"Name: {Name} {Surname}," +
+               $" Age: {Age}, Gender: {Gender}, ";
         }
 
 
@@ -144,10 +131,10 @@ namespace Model
         /// <param name="gender"></param>
         public PersonBase(string name, string surname, int age, Gender gender)
         {
-            _name = name;
-            _surname = surname;
-            _age = age;
-            _gender = gender;
+            Name = name;
+            Surname = surname;
+            Age = age;
+            Gender = gender;
         }
 
         /// <summary>
@@ -199,7 +186,7 @@ namespace Model
         /// <param name="name"></param>
         /// <param name="surname"></param>
         /// <exception cref="ArgumentException"></exception>
-        public void CheckLanguage(string name, string surname)
+        private void CheckLanguage(string name, string surname)
         {
             Languege nameLang = DefineLanguage(name);
             Languege surnameLang = DefineLanguage(surname);
@@ -215,7 +202,7 @@ namespace Model
         /// </summary>
         /// <param name="str"></param>
         /// <returns> Languege.</returns>
-        public static Languege DefineLanguage(string word)
+        private Languege DefineLanguage(string word)
         {
             Regex latin = new Regex(@"[a-zA-Z]");
             Regex cyrillic = new Regex(@"[а-яА-Я]");

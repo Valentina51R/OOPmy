@@ -74,8 +74,8 @@ namespace Model
 
             if (countIndex < index)
             {
-                throw new IndexOutOfRangeException("Элемента с индексом " +
-                    "{index} нет в списке");
+                throw new IndexOutOfRangeException($"Элемента с индексом " +
+                    $"{index} нет в списке");
             }
             else
             {

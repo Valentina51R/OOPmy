@@ -72,47 +72,36 @@ namespace ConsoleApp
 
             // TODO: дать пользователю выбор кого вводить ребёнка или взрослого
 
-            Console.WriteLine($"Если хотите ввести нового взрослого напишите - 1," +
-                $"если ребёнка - 2: ");
-            int who = int.Parse(Console.ReadLine());
-            // По умолчанию - Взрослый
             PersonBase newperson = new Adult();
-            switch (who)
-            {
-                case 1:
-                    {
-                        newperson = new Adult();
-                        break;
-                    }
 
-                case 2:
-                    {
-                        newperson = new Child();
-                        break;
-                    }
-                default:
-                    break;
-            }
-
-            /*
-            var actionlistAdult = new List<(Action, string)>;
+            Action actionStart = new Action(() =>
             {
-                (new Action(() =>
+                Console.Write($"Если хотите ввести взрослого напишите - 1, " +
+                                  $"если ребёнка - 2: ");
+                // По умолчанию - Взрослый
+                int who = int.Parse(Console.ReadLine());
+
+                switch (who)
                 {
-                    Console.Write($"\nВведите данные матери: ");
-                    newperson.Mother = ;
-                    string name = CheckNames(Console.ReadLine());
-                    newperson.Name = PersonBase.CheckNameSurname(name);
-                }), "name"),
-                (new Action(() =>
-                {
-                    Console.Write($"\nВведите наименование заведения," +
-                        $" где зарегистрирован ребёнок: ");
-                    string name = CheckNames(Console.ReadLine());
-                    newperson.Name = PersonBase.CheckNameSurname(name);
-                }), "name")
-            }
-            */
+                    case 1:
+                        {
+                            newperson = new Adult();
+                            break;
+                        }
+
+                    case 2:
+                        {
+                            newperson = new Child();
+                            break;
+                        }
+                    default:
+                        {
+                            throw new ArgumentException("Введите для взрослого - 1, для ребёнка - 2: ");
+                            break;
+                        }
+                }
+            });
+
 
             var actionList = new List<(Action, string)>
             {
@@ -130,7 +119,6 @@ namespace ConsoleApp
                 }), "surname"),
                 (new Action(() =>
                 {
-                    // TODO: Не действует провера возраста.?
                     Console.Write($"Введите возраст человека:");
                     bool result = ushort.TryParse(Console.ReadLine(),
                         out ushort age);
@@ -161,9 +149,189 @@ namespace ConsoleApp
                 }), "gender")
             };
 
+            var actionlistAdult = new List<(Action, string)>
+            {
+                (new Action(() =>
+                {
+                    Console.Write($"Введите номер паспорта (9 цифр):");
+                    bool result = uint.TryParse(Console.ReadLine(),
+                        out uint passport);
+                    Adult newpersonAdult = (Adult)newperson;
+                    if(result != true)
+                    {
+                        throw new ArgumentException("Номер паспорта введён некорректно," +
+                            " вводите только цифры!");
+                    }
+                    newpersonAdult.Рassport = passport;
+                }), "passport"),
+                (new Action(() =>
+                {
+                    Adult newpersonAdult = (Adult)newperson;
+                    Console.Write("Введите место работы: ");
+                    newpersonAdult.Job = Console.ReadLine();
+                }), "job"),
+                (new Action(() =>
+                {
+                    Adult newpersonAdult = (Adult)newperson;
+                    Console.Write($"Семейное положение " +
+                        $"(0 - одинок, 1 - состоит в браке): ");
+                    ushort maritalstatus1 = ushort.Parse(Console.ReadLine());
+                    switch (maritalstatus1)
+                    {
+                        case 1:
+                            {
+                                newpersonAdult.MaritalStatus = MaritalStatus.Married;
+                                Console.WriteLine("Информация о партнёре поднимается из архива автоматически.");
+                                _ = Console.ReadKey();
+                                if (newpersonAdult.Gender == Gender.Male)
+                                {
+                                    newpersonAdult.Partner = RandomPerson.GetRandomAdult
+                                    (MaritalStatus.Married, newpersonAdult, "wemen");
+                                }
+                                else
+                                {
+                                    newpersonAdult.Partner = RandomPerson.GetRandomAdult
+                                    (MaritalStatus.Married, newpersonAdult, "men");
+                                }
+                                break;
+                            }
+                        case 0:
+                            {
+                                newpersonAdult.MaritalStatus = MaritalStatus.Single;
+                                break;
+                            }
+                        default:
+                            {
+                                throw new ArgumentException
+                                ("Введите 1 - в браке, 0 - одинок: ");
+                                break;
+                            }
+                    }
+                }), "maritalstatus")
+            };
+
+            var actionlistChild = new List<(Action, string)>
+            {
+                (new Action(() =>
+                {
+                    Child newpersonChild = (Child)newperson;
+                    Console.Write("У ребёнка есть информация о матери?" +
+                        " (1 - есть (будет поднята из архива), 0 - нет информации):");
+                    ushort haveOrNot = ushort.Parse(Console.ReadLine());
+                    switch (haveOrNot)
+                    {
+                        case 1:
+                            {
+                                newpersonChild.Mother = RandomPerson.GetRandomAdult
+                                (MaritalStatus.Married, newpersonChild.Father, "wemen");
+                                break;
+                            }
+                        case 0:
+                            {
+                                break;
+                            }
+                        default:
+                            {
+                                throw new ArgumentException
+                                ("Введите 1 - есть есть информация о матери" +
+                                ", 0 - нет информации.");
+                                break;
+                            }
+                    }
+                }), "Mother"),
+                (new Action(() =>
+                {
+                    Child newpersonChild = (Child)newperson;
+                    Console.Write("У ребёнка есть информация об отце?" +
+                        " (1 - есть (будет поднята из архива), 0 - нет информации):");
+                    ushort  haveOrNot = ushort.Parse(Console.ReadLine());
+                    switch (haveOrNot)
+                    {
+                        case 1:
+                            {
+                                newpersonChild.Father = RandomPerson.GetRandomAdult
+                                (MaritalStatus.Married, newpersonChild.Mother, "men");
+                                break;
+                            }
+                        case 0:
+                            {
+                                break;
+                            }
+                        default:
+                            {
+                                throw new ArgumentException
+                                ("Введите 1 - есть информация об отце," +
+                                " 0 - нет информации.");
+                                break;
+                            }
+                    }
+                }), "Father"),
+                (new Action(() =>
+                {
+                    Child newpersonChild = (Child)newperson;
+                    Console.Write($"Ребёнок посещает в школу/садик? (1 - да, 0 - нет)");
+                    switch (ushort.Parse(Console.ReadLine()))
+                    {
+                        case 1:
+                            {
+                                if (newpersonChild.Age < 8)
+                                {
+                                    Console.Write("Введите наименование детского сада: ");
+                                    newpersonChild.Institution = "Детский сад \"" + Console.ReadLine() + "\"";
+                                }
+                                else
+                                {
+                                    Console.Write("Введите наименование школы: ");
+                                    newpersonChild.Institution = "Школа \"" + Console.ReadLine() + "\"";
+                                }
+                                break;
+                            }
+                        case 0:
+                            {
+                                break;
+                            }
+                        default:
+                            {
+                                throw new ArgumentException
+                                ("Введите 1 - посещает школу/сад, 0 - нет.");
+                                break;
+                            }
+                    }
+                }), "Institution")
+
+            };
+
+            // Выбор взрослого или ребёнка
+            ActionHandler(actionStart, "Adult or Child");
+
+            // Заполнение персоны
             foreach (var action in actionList)
             {
                 ActionHandler(action.Item1, action.Item2);
+            }
+
+            // Заполнение взрослого или ребёнка
+            switch (newperson)
+            {
+                case Adult:
+                    {
+                        foreach (var action in actionlistAdult)
+                        {
+                            ActionHandler(action.Item1, action.Item2);
+                        }
+                        break;
+                    }
+
+                case Child:
+                    {
+                        foreach (var action in actionlistChild)
+                        {
+                            ActionHandler(action.Item1, action.Item2);
+                        }
+                        break;
+                    }
+                default:
+                    break;
             }
 
             return newperson;

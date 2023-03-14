@@ -18,14 +18,19 @@ namespace Model
         public const int MaxAdultAge = 150;
 
         /// <summary>
-        /// Паспорт.
+        /// Минимальный номер паспорта
         /// </summary>
-        private string _passport;
+        public const int MinPassportNumber = 100000000;
 
         /// <summary>
-        /// Семеное положениея.
+        /// Максимальный номер паспорта
         /// </summary>
-        private MaritalStatus _maritalstatus;
+        public const int MaxPassportNumber = 999999999;
+
+        /// <summary>
+        /// Паспорт.
+        /// </summary>
+        private uint _passport;
 
         /// <summary>
         /// супруг
@@ -33,14 +38,9 @@ namespace Model
         private Adult _partner;
 
         /// <summary>
-        /// Место работы.
-        /// </summary>
-        private string _job;
-
-        /// <summary>
         /// Задание паспорта
         /// </summary>
-        public string Рassport
+        public uint Рassport
         {
             get
             {
@@ -48,24 +48,24 @@ namespace Model
             }
             set
             {
-                _passport = value;
+                if (value > MaxPassportNumber || value < MinPassportNumber)
+                {
+                    throw new ArgumentException($"Введён некорректный" +
+                        $" номер паспорта, введите " +
+                        $" от {MinPassportNumber} до {MaxPassportNumber}!");
+                }
+                else
+                {
+                    _passport = value;
+                }
             }
         }
 
         /// <summary>
         /// Задание семейного положения.
         /// </summary>
-        public MaritalStatus MaritalStatus
-        {
-            get
-            {
-                return _maritalstatus;
-            }
-            set
-            {
-                _maritalstatus = value;
-            }
-        }
+        public MaritalStatus MaritalStatus { get; set; }
+
 
         /// <summary>
         /// Задание паспорта
@@ -78,11 +78,6 @@ namespace Model
             }
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException(
-                        $"Партнёр не задан. Этот человек одинок.");
-                }
                 if (MaritalStatus == MaritalStatus.Married &&
                     value.MaritalStatus == MaritalStatus.Married)
                 {
@@ -94,24 +89,14 @@ namespace Model
                         "Что-то пошло не так." +
                         "Проверти семеное положение партнёров!");
                 }
-                _partner = value;
             }
         }
 
         /// <summary>
         /// Задание места работы.
         /// </summary>
-        public string Job
-        {
-            get
-            {
-                return _job;
-            }
-            set
-            {
-                _job = value;
-            }
-        }
+        public string Job { get; set; }
+
 
         /// <summary>
         /// Ввод возраста взрослого человека.
@@ -124,9 +109,8 @@ namespace Model
             }
             set
             {
-                _age = value;
 
-                if (value > MaxAdultAge && value < MinAdultAge)
+                if (value > MaxAdultAge || value < MinAdultAge)
                 {
                     throw new ArgumentException($"Введён некорректный" +
                         $" возвраст взрослого, введите возраст" +
@@ -175,10 +159,10 @@ namespace Model
         }
 
         /// <summary>
-        /// Метод для определния типа личности.
+        /// Метод для определния типа существа.
         /// </summary>
         /// <returns></returns>
-        public string PersonalityType()
+        public string MythologicalCreature()
         {
             string[] essence = {
                 "vampire", "werewolf",
@@ -186,7 +170,7 @@ namespace Model
 
             string type = essence[new Random().Next(1, essence.Length)];
 
-            return $"This adult is a: {type}";
+            return $"The {Name} {Surname} is a {type}";
         }
 
     }
