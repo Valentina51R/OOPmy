@@ -1,4 +1,5 @@
 
+
 namespace Model
 {
     /// <summary>
@@ -30,9 +31,13 @@ namespace Model
         private static string[] _surnames = { "Bennet", "Gilbert", "Pierce", "Salvatore",
                 "Sommers", "Forbes", "Donovan", "Lockwood" };
 
-        //TODO: XML
+        //TODO: (+)XML
 
-        public static PersonBase GetRandomAdultOrChild()
+        /// <summary>
+        /// Метод создания взрослого или ребёнка
+        /// </summary>
+        /// <returns></returns>
+        public static PersonBase GetRandomAnyPerson()
         {
             var who = _random.Next(0, 2);
             if (who > 0)
@@ -45,42 +50,32 @@ namespace Model
             }
         }
 
-        // TODO: попытка задания нужного гендера, yourchoice норм?
-        //TODO: передавать тип Gender 
+        // TODO: (+)передавать тип Gender 
         /// <summary>
         /// Создание рандомного человека
         /// </summary>
         /// <returns></returns>
-        public static void GetRandomPerson(PersonBase person, string yourchoice = "rand")
+        public static void GetRandomPerson(PersonBase person, Gender gender = Gender.Default)
         {
-            //Gender genderPerson = (Gender)_random.Next(2);
 
-            if (yourchoice == "men")
-            {
-                person.Gender = Gender.Male;
-            }
-            else if (yourchoice == "wemen")
-            {
-                person.Gender = Gender.Female;
-            }
-            else
+            if (gender == Gender.Default)
             {
                 person.Gender = (Gender)_random.Next(2);
             }
-
-            string name;
-            string surname;
+            else
+            {
+                person.Gender = gender;
+            }
 
             if (person.Gender == Gender.Male)
             {
                 person.Name = _menNames[_random.Next(1, _menNames.Length)];
-                person.Surname = _surnames[_random.Next(1, _surnames.Length)];
             }
             else
             {
                 person.Name = _wemenNames[_random.Next(1, _wemenNames.Length)];
-                person.Surname = _surnames[_random.Next(1, _surnames.Length)];
             }
+            person.Surname = _surnames[_random.Next(1, _surnames.Length)];
 
         }
 
@@ -89,11 +84,11 @@ namespace Model
         /// </summary>
         /// <returns></returns>
         public static Adult GetRandomAdult(MaritalStatus status
-            //TODO: RSDN
-            = MaritalStatus.Single, Adult partner = null, string yourchoice = "rand")
+            //TODO: (+)RSDN
+            = MaritalStatus.Single, Adult partner = null, Gender gender = Gender.Default)
         {
             Adult randomAdult = new Adult();
-            GetRandomPerson(randomAdult, yourchoice);
+            GetRandomPerson(randomAdult, gender);
 
             randomAdult.Age = _random.Next(Adult.MinAdultAge, Adult.MaxAdultAge);
 
@@ -104,11 +99,11 @@ namespace Model
             {
                 if (randomAdult.Gender == Gender.Male)
                 {
-                    randomAdult.Partner = GetRandomAdult(MaritalStatus.Married, randomAdult, "wemen");
+                    randomAdult.Partner = GetRandomAdult(MaritalStatus.Married, randomAdult, Gender.Female);
                 }
                 else
                 {
-                    randomAdult.Partner = GetRandomAdult(MaritalStatus.Married, randomAdult, "men");
+                    randomAdult.Partner = GetRandomAdult(MaritalStatus.Married, randomAdult, Gender.Male);
                 }
             }
             else
@@ -133,7 +128,11 @@ namespace Model
             return randomAdult;
         }
 
-        //TODO: XML
+        //TODO: (+)XML
+        /// <summary>
+        /// Метод создания рандомного ребёнка.
+        /// </summary>
+        /// <returns></returns>
         public static Child GetRandomChild()
         {
             Child randomChild = new Child();
@@ -147,7 +146,7 @@ namespace Model
             if (mother > 0)
             {
                 randomChild.Mother = GetRandomAdult
-                    (MaritalStatus.Married, randomChild.Father, "wemen");
+                    (MaritalStatus.Married, randomChild.Father, Gender.Female);
             }
 
             var fathert = _random.Next(0, 4);
@@ -155,7 +154,7 @@ namespace Model
             if (fathert > 0)
             {
                 randomChild.Father = GetRandomAdult
-                    (MaritalStatus.Married, randomChild.Mother, "men");
+                    (MaritalStatus.Married, randomChild.Mother, Gender.Male);
             }
 
             string[] kindergarten = {

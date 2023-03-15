@@ -70,8 +70,6 @@ namespace ConsoleApp
         public static PersonBase InputPersonByConsole()
         {
 
-            // TODO: дать пользователю выбор кого вводить ребёнка или взрослого
-
             PersonBase newperson = new Adult();
 
             Action actionStart = new Action(() =>
@@ -186,12 +184,12 @@ namespace ConsoleApp
                                 if (newpersonAdult.Gender == Gender.Male)
                                 {
                                     newpersonAdult.Partner = RandomPerson.GetRandomAdult
-                                    (MaritalStatus.Married, newpersonAdult, "wemen");
+                                    (MaritalStatus.Married, newpersonAdult, Gender.Female);
                                 }
                                 else
                                 {
                                     newpersonAdult.Partner = RandomPerson.GetRandomAdult
-                                    (MaritalStatus.Married, newpersonAdult, "men");
+                                    (MaritalStatus.Married, newpersonAdult, Gender.Male);
                                 }
                                 break;
                             }
@@ -223,7 +221,7 @@ namespace ConsoleApp
                         case 1:
                             {
                                 newpersonChild.Mother = RandomPerson.GetRandomAdult
-                                (MaritalStatus.Married, newpersonChild.Father, "wemen");
+                                (MaritalStatus.Married, newpersonChild.Father, Gender.Female);
                                 break;
                             }
                         case 0:
@@ -250,7 +248,7 @@ namespace ConsoleApp
                         case 1:
                             {
                                 newpersonChild.Father = RandomPerson.GetRandomAdult
-                                (MaritalStatus.Married, newpersonChild.Mother, "men");
+                                (MaritalStatus.Married, newpersonChild.Mother, Gender.Male);
                                 break;
                             }
                         case 0:
