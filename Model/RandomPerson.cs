@@ -30,6 +30,7 @@ namespace Model
         private static string[] _surnames = { "Bennet", "Gilbert", "Pierce", "Salvatore",
                 "Sommers", "Forbes", "Donovan", "Lockwood" };
 
+        //TODO: XML
 
         public static PersonBase GetRandomAdultOrChild()
         {
@@ -45,6 +46,7 @@ namespace Model
         }
 
         // TODO: попытка задания нужного гендера, yourchoice норм?
+        //TODO: передавать тип Gender 
         /// <summary>
         /// Создание рандомного человека
         /// </summary>
@@ -87,6 +89,7 @@ namespace Model
         /// </summary>
         /// <returns></returns>
         public static Adult GetRandomAdult(MaritalStatus status
+            //TODO: RSDN
             = MaritalStatus.Single, Adult partner = null, string yourchoice = "rand")
         {
             Adult randomAdult = new Adult();
@@ -130,6 +133,7 @@ namespace Model
             return randomAdult;
         }
 
+        //TODO: XML
         public static Child GetRandomChild()
         {
             Child randomChild = new Child();

@@ -17,7 +17,6 @@ namespace Model
         /// </summary>
         public const int MaxChildAge = 18;
 
-
         /// <summary>
         /// Садик / шкала.
         /// </summary>

@@ -2,6 +2,7 @@ using System.Text.RegularExpressions;
 
 namespace Model
 {
+    //TODO: PersonBase в названии файла
     /// <summary>
     /// Класс персоны.
     /// </summary>

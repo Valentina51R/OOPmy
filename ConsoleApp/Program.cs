@@ -40,21 +40,20 @@ namespace ConsoleApp
 
             switch (person)
             {
-                case Adult:
-                    {
-                        Adult adult = (Adult)person;
-                        Console.WriteLine("This is an adult!");
-                        Console.WriteLine(adult.MythologicalCreature());
-                        break;
-                    }
+                //TODO: pattern matching
+                case Adult adult:
+                {
+                    Console.WriteLine("This is an adult!");
+                    Console.WriteLine(adult.MythologicalCreature());
+                    break;
+                }
 
-                case Child:
-                    {
-                        Child child = (Child)person;
-                        Console.WriteLine("It's a child!");
-                        Console.WriteLine(child.Dishes());
-                        break;
-                    }
+                case Child child:
+                {
+                    Console.WriteLine("It's a child!");
+                    Console.WriteLine(child.Dishes());
+                    break;
+                }
                 default:
                     break;
             }
@@ -63,6 +62,7 @@ namespace ConsoleApp
                 "\n\t\tCreating a new person.");
             _ = Console.ReadKey();
 
+            //TODO: RSDN
             PersonBase newperson = ConsolePerson.InputPersonByConsole();
 
             Console.WriteLine("\nA new person: ");
