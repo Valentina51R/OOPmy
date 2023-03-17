@@ -12,61 +12,49 @@ namespace ConsoleApp
         /// </summary>
         private static void Main()
         {
-            Console.WriteLine("Each new step is performed by" +
-                " pressing any keyboard key.\nPress any key.");
-            _ = Console.ReadKey();
+            Ball ball1 = new Ball();
+            Pyramid pyramid1 = new Pyramid();
+            Parallelepiped parallelepiped1 = new Parallelepiped();
 
-            // а.Создание программно двух списков персон,
-            // в каждом из которых будет по три человека.
-            Console.WriteLine("\n\t\tCreating programmatically" +
-                " a list of persons consisting of seven people.");
-            _ = Console.ReadKey();
 
-            PersonList personlist = new PersonList();
-
-            for (int i = 0; i < 7; i++)
+            // TODO: Ограничение на ввод положительного числа.
+            while(true)
             {
-                personlist.Add(RandomPerson.GetRandomAnyPerson());
-            }
-
-            // Печать исходного списка
-            Console.WriteLine("List of people:");
-            ConsolePerson.Print(personlist);
-
-            Console.WriteLine("\n\tThe fourth person on the list.\n");
-            _ = Console.ReadKey();
-
-            PersonBase person = personlist.FindByIndex(3);
-
-            switch (person)
-            {
-                case Adult:
-                    {
-                        Adult adult = (Adult)person;
-                        Console.WriteLine("This is an adult!");
-                        Console.WriteLine(adult.MythologicalCreature());
-                        break;
-                    }
-
-                case Child:
-                    {
-                        Child child = (Child)person;
-                        Console.WriteLine("It's a child!");
-                        Console.WriteLine(child.Dishes());
-                        break;
-                    }
-                default:
+                try
+                {
+                    Console.Write("Введите радиус шара: ");
+                    ball1.Radiuc = double.Parse(Console.ReadLine());
                     break;
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine($"{ex.Message}");
+                }
             }
 
-            Console.WriteLine("\n\t\tSomething interesting!!!" +
-                "\n\t\tCreating a new person.");
-            _ = Console.ReadKey();
+            Console.WriteLine("Объём шара: " + ball1.Volume + "\n");
 
-            PersonBase newperson = ConsolePerson.InputPersonByConsole();
 
-            Console.WriteLine("\nA new person: ");
-            Console.WriteLine(newperson.GetInfo());
+            Console.Write("Введите высоту пирамиды: ");
+            pyramid1.Height = double.Parse(Console.ReadLine());
+
+
+            Console.Write("Введите площадь основания пирамиды: ");
+            pyramid1.Squar = double.Parse(Console.ReadLine());
+
+            Console.WriteLine($"Объём пирамиды: {pyramid1.Volume}");
+
+            Console.Write("Введите высоту параллелепипеда: ");
+            parallelepiped1.Height = double.Parse(Console.ReadLine());
+
+            Console.Write("Введите ширину параллелепипеда: ");
+            parallelepiped1.Width = double.Parse(Console.ReadLine());
+
+            Console.Write("Введите длину параллелепипеда: ");
+            parallelepiped1.Length = double.Parse(Console.ReadLine());
+
+            Console.WriteLine($"Объём пирамиды: {parallelepiped1.Volume}");
+
         }
     }
 }
