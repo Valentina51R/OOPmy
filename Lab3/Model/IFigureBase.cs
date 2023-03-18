@@ -6,13 +6,13 @@ namespace Model
     /// Класс для создания
     /// фигуры
     /// </summary>
-    public abstract class FigureBase
+    public interface IFigureBase
     {
         /// <summary>
         /// Метод расчёта объёма фигуры.
         /// </summary>
         /// <returns></returns>
-        public abstract double Volume { get; }
+        public double Volume { get; }
 
         protected static double CheckNumber(double number)
         {

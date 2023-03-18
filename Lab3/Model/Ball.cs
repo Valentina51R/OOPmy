@@ -1,7 +1,7 @@
 
 namespace Model
 {
-    public class Ball : FigureBase
+    public class Ball : IFigureBase
     {
         /// <summary>
         /// Радиус.
@@ -11,7 +11,7 @@ namespace Model
         /// <summary>
         /// Радиус шара.
         /// </summary>
-        public double Radiuc
+        public double Radius
         {
             get
             {
@@ -19,7 +19,7 @@ namespace Model
             }
             set
             {
-                _radius = CheckNumber(value);
+                _radius = IFigureBase.CheckNumber(value);
             }
         }
 
@@ -28,14 +28,20 @@ namespace Model
         /// Расчёт объёма шара
         /// </summary>
         /// <returns>valume.</returns>
-        public override double Volume
+        public double Volume
         {
             get
             {
-                return (4.0 / 3.0) * Math.PI * Math.Pow(Radiuc, 3);
+                return (4.0 / 3.0) * Math.PI * Math.Pow(Radius, 3);
             }
         }
 
+        public Ball(double radius)
+        {
+            Radius = radius;
+        }
 
+        public Ball()
+        { }
     }
 }

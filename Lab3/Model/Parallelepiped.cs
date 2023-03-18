@@ -1,7 +1,7 @@
 
 namespace Model
 {
-    public class Parallelepiped : FigureBase
+    public class Parallelepiped : IFigureBase
     {
         /// <summary>
         /// Высота.
@@ -29,7 +29,7 @@ namespace Model
             }
             set
             {
-                _height = CheckNumber(value);
+                _height = IFigureBase.CheckNumber(value);
             }
         }
 
@@ -44,7 +44,7 @@ namespace Model
             }
             set
             {
-                _width = CheckNumber(value);
+                _width = IFigureBase.CheckNumber(value);
             }
         }
 
@@ -59,7 +59,7 @@ namespace Model
             }
             set
             {
-                _length = CheckNumber(value);
+                _length = IFigureBase.CheckNumber(value);
             }
         }
 
@@ -67,12 +67,23 @@ namespace Model
         /// <summary>
         /// Объём параллелепипеда
         /// </summary>
-        public override double Volume
+        public double Volume
         {
             get
             {
                 return Height * Width * Length;
             }
         }
+
+        public Parallelepiped(double height, double width, double length)
+        {
+            Height = height;
+            Width = width;
+            Length = length;
+        }
+
+        public Parallelepiped()
+        { }
+
     }
 }
