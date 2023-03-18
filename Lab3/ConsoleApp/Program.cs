@@ -18,7 +18,7 @@ namespace ConsoleApp
 
 
             // TODO: Ограничение на ввод положительного числа.
-            while(true)
+            while (true)
             {
                 try
                 {
